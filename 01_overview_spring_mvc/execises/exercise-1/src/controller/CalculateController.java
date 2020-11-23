@@ -19,12 +19,15 @@ public class CalculateController {
                             @RequestParam String money,
                             Model model) {
 
-        if (type.equals("vnd")) {
-            model.addAttribute("result",reverseMoney.vndToUSD(Integer.parseInt(money)));
-        } else {
-            model.addAttribute("result",reverseMoney.usdToVND(Integer.parseInt(money)));
+        try {
+            if (type.equals("vnd")) {
+                model.addAttribute("result",reverseMoney.vndToUSD(Double.parseDouble(money)));
+            } else {
+                model.addAttribute("result",reverseMoney.usdToVND(Double.parseDouble(money)));
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("message","error");
         }
-
 
         return "app/result";
     }

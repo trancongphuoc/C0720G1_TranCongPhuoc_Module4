@@ -12,7 +12,7 @@
     <title>Dictionary</title>
 </head>
 <body>
-<c:if test="${dictionary != null}"><h1>${dictionary.keyWord} : ${dictionary.means}</h1></c:if>
+<c:if test="${dictionary != null}"><h1>${dictionary}</h1></c:if>
 <c:if test="${message != null}"><h1 style="color: red">${message}</h1></c:if>
 
 

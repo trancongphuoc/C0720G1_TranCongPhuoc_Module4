@@ -11,7 +11,7 @@
     <title>Result</title>
 </head>
 <body>
-<h1>Result = ${result}</h1>
+<h1>Result = ${result} ${message}</h1>
 
 <a href="/index.jsp"></a>
 </body>
