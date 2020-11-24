@@ -7,22 +7,39 @@ import org.springframework.stereotype.Service;
 public class CalculateServiceImpl implements CalculateService {
 
     @Override
-    public double addition(Integer firstNumber, Integer secondNumber) {
+    public double addition(Double firstNumber, Double secondNumber) {
         return firstNumber + secondNumber;
     }
 
     @Override
-    public double subtraction(Integer firstNumber, Integer secondNumber) {
+    public double subtraction(Double firstNumber, Double secondNumber) {
         return firstNumber - secondNumber;
     }
 
     @Override
-    public double multiplication(Integer firstNumber, Integer secondNumber) {
+    public double multiplication(Double firstNumber, Double secondNumber) {
         return firstNumber * secondNumber;
     }
 
     @Override
-    public double division(Integer firstNumber, Integer secondNumber) {
+    public double division(Double firstNumber, Double secondNumber) {
         return firstNumber / secondNumber;
     }
+
+    @Override
+    public double calculate(Double firstNumber, Double secondNumber, String calculation) {
+        switch (calculation) {
+            case "+":
+                return addition(firstNumber, secondNumber);
+            case "-":
+                return subtraction(firstNumber, secondNumber);
+            case "x":
+                return multiplication(firstNumber, secondNumber);
+            case "/":
+                return division(firstNumber, secondNumber);
+        }
+        return 0;
+    }
+
+
 }

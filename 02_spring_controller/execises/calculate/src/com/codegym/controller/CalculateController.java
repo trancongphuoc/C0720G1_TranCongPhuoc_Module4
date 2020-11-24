@@ -19,33 +19,18 @@ public class CalculateController {
                               @RequestParam String calculation,
                               Model model) {
 
-        int firstNumberInt;
-        int secondNumberInt;
+        double firstNumberInt;
+        double secondNumberInt;
 
         try {
-            firstNumberInt = Integer.parseInt(firstNumber);
-            secondNumberInt = Integer.parseInt(secondNumber);
+            firstNumberInt = Double.parseDouble(firstNumber);
+            secondNumberInt = Double.parseDouble(secondNumber);
         } catch (NumberFormatException e) {
             model.addAttribute("message", "NumberFormat Exception");
             return "index";
         }
 
-        double result = 0;
-
-        switch (calculation) {
-            case "+":
-                result = calculateService.addition(firstNumberInt,secondNumberInt);
-                break;
-            case "-":
-                result = calculateService.subtraction(firstNumberInt,secondNumberInt);
-                break;
-            case "x":
-                result = calculateService.multiplication(firstNumberInt,secondNumberInt);
-                break;
-            case "/":
-                result = calculateService.division(firstNumberInt,secondNumberInt);
-                break;
-        }
+        double result = calculateService.calculate(firstNumberInt, secondNumberInt, calculation);
 
         model.addAttribute("result", result);
 

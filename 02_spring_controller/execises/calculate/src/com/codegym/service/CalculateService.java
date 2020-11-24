@@ -2,11 +2,13 @@ package com.codegym.service;
 
 public interface CalculateService {
 
-    double addition(Integer firstNumber, Integer secondNumber);
+    double addition(Double firstNumber, Double secondNumber);
 
-    double subtraction(Integer firstNumber, Integer secondNumber);
+    double subtraction(Double firstNumber, Double secondNumber);
 
-    double multiplication(Integer firstNumber, Integer secondNumber);
+    double multiplication(Double firstNumber, Double secondNumber);
 
-    double division(Integer firstNumber, Integer secondNumber);
+    double division(Double firstNumber, Double secondNumber);
+
+    double calculate(Double firstNumber, Double secondNumber, String calculation);
 }
