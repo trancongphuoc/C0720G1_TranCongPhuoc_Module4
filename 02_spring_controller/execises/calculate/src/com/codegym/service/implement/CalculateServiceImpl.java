@@ -23,6 +23,7 @@ public class CalculateServiceImpl implements CalculateService {
 
     @Override
     public double division(Double firstNumber, Double secondNumber) {
+
         return firstNumber / secondNumber;
     }
 
@@ -36,7 +37,7 @@ public class CalculateServiceImpl implements CalculateService {
             case "x":
                 return multiplication(firstNumber, secondNumber);
             case "/":
-                return division(firstNumber, secondNumber);
+                    return division(firstNumber, secondNumber);
         }
         return 0;
     }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <form action="/calculate">
-    <input type="text" name="firstNumber">
+    <input type="number" step="any" name="firstNumber">
     <input type="text" name="secondNumber">
     <br>
     <input type="submit" value="+" name="calculation">
@@ -21,7 +21,7 @@
     <input type="submit" value="/" name="calculation">
 
     <h2>${result}</h2>
-    <h2>${message}</h2>
+    <h2 style="color: red">${message}</h2>
 </form>
 </body>
 </html>

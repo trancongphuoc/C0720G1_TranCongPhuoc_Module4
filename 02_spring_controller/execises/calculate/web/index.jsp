@@ -12,7 +12,7 @@
 </head>
 <body>
 <form action="/calculate">
-    <input type="text" name="firstNumber">
+    <input type="number" step="any" name="firstNumber">
     <input type="text" name="secondNumber">
     <br>
     <input type="submit" value="+" name="calculation">

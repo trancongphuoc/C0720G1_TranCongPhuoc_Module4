@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Create box electronic</h1>
-<form:form action="/create" method="post" modelAttribute="boxElectronic">
+<form:form action="create" method="post" modelAttribute="boxElectronic">
     <label>Languages: </label>
     <select name="language">
         <option>English</option>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="/list :: head">
+</head>
+<body>
+<div class="container">
+    <h1>Product</h1>
+
+    <form th:object="${product}" method="post" novalidate="novalidate">
+        <div class="form-group">
+            <label class="col-form-label col-2">ID</label>
+            <input class="form-control col-6" type="text" th:field="*{id}" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label col-2">Name</label>
+            <input class="form-control col-6" type="text" th:field="*{name}" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label col-2">Cost</label>
+            <input class="form-control col-6" type="text" th:field="*{cost}" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label col-2">Producer</label>
+            <input class="form-control col-6" type="text" th:field="*{producer}" readonly/>
+        </div>
+        <a th:href="@{/}" class="btn btn-outline-primary">Back</a>
+    </form>
+</div>
+</body>
+</html>

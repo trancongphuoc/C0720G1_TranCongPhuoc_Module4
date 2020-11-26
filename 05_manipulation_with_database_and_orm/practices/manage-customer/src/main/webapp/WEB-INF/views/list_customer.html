@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List student</title>
+</head>
+<body>
+    <header th:replace="~{common::headerStudent}"></header>
+    <p style="color: green" th:text="${message}"></p>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Date of birth</th>
+            <th>Address</th>
+            <th>Request param</th>
+            <th>Path variable</th>
+        </tr>
+        <th:block th:each="customer : ${listCustomer}">
+            <tr>
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.dateOfBirth}"></td>
+                <td th:text="${customer.address}"></td>
+
+                <td><a th:href="@{/customer/detail(id=${customer.id}, name=${customer.name})}">Request param</a></td>
+                <td><a th:href="@{/customer/detail/{id}(id=${customer.id})}">Path variable</a></td>
+            </tr>
+        </th:block>
+    </table>
+<!--    <footer th:insert="common::footerStudent"></footer>-->
+<!--    <th:block th:insert="common::footerStudent"></th:block>-->
+    <footer th:replace="common::footerStudent"></footer>
+</body>
+</html>

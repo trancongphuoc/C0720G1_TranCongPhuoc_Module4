@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>List Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Product List</h1>
+    <a th:href="@{/product/insert}" class="btn btn-outline-success">Create new Product</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Producer</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, loopState : ${productList}">
+            <td th:text="${product.id}"></td>
+            <td><a th:href="@{/product/{id}/show(id=${product.id})}" th:text="${product.name}"></a></td>
+            <td th:text="${product.cost}"></td>
+            <td th:text="${product.producer}"></td>
+            <td><a th:href="@{/product/{id}/update(id=${product.id})}" class="btn btn-outline-primary">Update</a></td>
+            <td><a th:href="@{/product/{id}/delete(id=${product.id})}" th:onclick="${'onDel('+ product.id +')'}" class="btn btn-outline-danger"  data-toggle="modal" data-target="#modelId">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/product/delete" method="post">
+            <div class="modal-body">
+                <input type="hidden" id="id" name="id">
+                <h1 style="color: red">Are you sure ?</h1>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onDel(id) {
+        document.getElementById("id").value = id;
+    }
+</script>
+</body>
+</html>
