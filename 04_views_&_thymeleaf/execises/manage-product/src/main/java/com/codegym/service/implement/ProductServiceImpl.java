@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void insertProduct(Product product) {
-        product.setId((int) (Math.random() * 10000));
+        product.setId(productMap.get(productMap.size()-1).getId() + 1);
         productMap.put(product.getId(), product);
     }
 
