@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{blog/layout::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="~{blog/layout::headerBlog}"></header>
+<div class="content container mt-5 mb-4">
+<table class="table">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Title</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog, state : ${blogList}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${blog.title}"></td>
+        <td><a class="btn btn-primary" th:href="@{/blog/update/{id}(id=${blog.id})}">Update</a></td>
+        <td><a th:onclick="'onDel('+*{blog.id}+')'" data-toggle="modal" data-target="#modelId" class="btn btn-danger">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<footer th:replace="~{blog/layout::footerBlog}"></footer>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="/blog/delete">
+            <div class="modal-body">
+                <input id="deleteId" type="hidden" name="id">
+                <span>Are you delete </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onDel(id) {
+        document.getElementById("deleteId").value = id;
+    }
+</script>
+</body>
+</html>
