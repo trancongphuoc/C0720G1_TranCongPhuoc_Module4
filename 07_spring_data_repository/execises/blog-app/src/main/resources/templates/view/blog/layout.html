@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headBlog">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .sidebar-container {
+            position: absolute;
+            width: 220px;
+            height: 134%;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .content-container {
+            padding-top: 20px;
+        }
+
+        .sidebar-logo {
+            padding: 10px 15px 10px 30px;
+            font-size: 20px;
+            background-color: #2574A9;
+        }
+
+        .sidebar-navigation {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            position: relative;
+        }
+
+        .sidebar-navigation li {
+            background-color: transparent;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            line-height: 20px;
+        }
+
+        .sidebar-navigation li a {
+            padding: 10px 15px 10px 30px;
+            display: block;
+            color: #fff;
+        }
+
+        .sidebar-navigation li .fa {
+            margin-right: 10px;
+        }
+
+        .sidebar-navigation li a:active,
+        .sidebar-navigation li a:hover,
+        .sidebar-navigation li a:focus {
+            text-decoration: none;
+            outline: none;
+        }
+
+        .sidebar-navigation li::before {
+            background-color: #2574A9;
+            position: absolute;
+            content: '';
+            height: 100%;
+            left: 0;
+            top: 0;
+            -webkit-transition: width 0.2s ease-in;
+            transition: width 0.2s ease-in;
+            width: 3px;
+            z-index: -1;
+        }
+
+        .sidebar-navigation li:hover::before {
+            width: 100%;
+        }
+
+        .sidebar-navigation .header {
+            font-size: 12px;
+            text-transform: uppercase;
+            background-color: #151515;
+            padding: 10px 15px 10px 30px;
+        }
+
+        .sidebar-navigation .header::before {
+            background-color: transparent;
+        }
+
+        .content-container {
+            padding-left: 220px;
+        }
+
+        .navbar {
+
+            padding-left: 220px;
+        }
+
+        /*=------------------------------------------------*/
+        @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
+        body {
+            background: linear-gradient(0deg, #fff, 50%, #DEEEFE);
+            font-family: 'Rubik', sans-serif;
+            /*background: #455A64;*/
+            height: 100 !important
+        }
+
+        .container-fluid {
+            overflow: hidden;
+            margin-top: 250px;
+            background: #262626;
+            color: #627482 !important;
+            margin-bottom: 0;
+            padding-bottom: 0
+        }
+
+        small {
+            font-size: calc(12px + (15 - 12) * ((100vw - 360px) / (1600 - 360))) !important
+        }
+
+        .bold-text {
+            color: #989c9e !important
+        }
+
+        .mt-55 {
+            margin-top: calc(50px + (60 - 50) * ((100vw - 360px) / (1600 - 360))) !important
+        }
+
+        h3 {
+            font-size: calc(34px + (40 - 34) * ((100vw - 360px) / (1600 - 360))) !important
+        }
+
+        .social {
+            font-size: 21px !important
+        }
+
+        .rights {
+            font-size: calc(10px + (12 - 10) * ((100vw - 360px) / (1600 - 360))) !important
+        }
+    </style>
+</head>
+<body>
+<nav class="header" th:fragment="headerBlog">
+    <a href="/blog">
+        <img src="image/logo.png" width="100%">
+    </a>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/blog">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" href="/blog">Home <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <th:block th:each="category : ${categoryList}">
+                            <a th:href="@{/blog/home(categoryId=${category.id})}" class="dropdown-item" th:text="${category.name}" th:value="${category.id}"></a>
+                        </th:block>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-manage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Manage
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown-manage">
+                        <a class="dropdown-item" href="/blog/create">Create New Blog</a>
+                        <a class="dropdown-item" href="/blog/list">Another action</a>
+                    </div>
+                </li>
+            </ul>
+            <form action="/blog/home" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="title">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</nav>
+
+<div class="content">
+
+    <div class="sidebar-container" th:fragment="sidebarBlog">
+        <!--        <div class="sidebar-logo">-->
+        <!--            Project Name-->
+        <!--        </div>-->
+        <ul class="sidebar-navigation">
+            <li class="header">Navigation</li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-home" aria-hidden="true"></i> Homepage
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                </a>
+            </li>
+            <li class="header">Another Menu</li>
+            <li th:each="category : ${categoryList}">
+                <a th:href="@{/blog/home(categoryId=${category.id})}" class="dropdown-item" th:text="${category.name}" th:value="${category.id}">
+                    <i class="fa fa-users" aria-hidden="true"></i> Friends
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-container">
+        <div class="">
+            <img class="float-left" style="margin-right: 30px; margin-left: 25px" src="image/img1.jpg" alt="" width="300px">
+            <h1  style="clear: right!important; ">ABC</h1>
+            <p>abchbsueuhfu</p>
+        </div>
+        <div style="clear: both">
+            <img class="float-left" style="margin-right: 30px; margin-left: 25px" src="image/img1.jpg" alt="" width="300px">
+            <h1  style="clear: right!important; ">ABC</h1>
+            <p>abchbsueuhfu</p>
+        </div><div style="clear: both">
+        <img class="float-left" style="margin-right: 30px; margin-left: 25px" src="image/img1.jpg" alt="" width="300px">
+        <h1  style="clear: right!important; ">ABC</h1>
+        <p>abchbsueuhfu</p>
+    </div><div style="clear: both">
+        <img class="float-left" style="margin-right: 30px; margin-left: 25px" src="image/img1.jpg" alt="" width="300px">
+        <h1  style="clear: right!important; ">ABC</h1>
+        <p>abchbsueuhfu</p>
+    </div>
+        <div style="clear: both">
+            <img class="float-left" style="margin-right: 30px; margin-left: 25px" src="image/img1.jpg" alt=""
+                 width="300px">
+            <h1 style="clear: right!important; ">ABC</h1>
+            <p>abchbsueuhfu</p>
+        </div>
+    </div>
+</div>
+<footer  class="footer" th:fragment="footerBlog">
+    <div class="container-fluid pb-0 mb-0 justify-content-center text-light ">
+        <footer>
+            <div class="row my-5 justify-content-center py-5">
+                <div class="col-11">
+                    <div class="row ">
+                        <div class="col-xl-8 col-md-4 col-sm-4 col-12 my-auto mx-auto a">
+                            <h3 class="text-muted mb-md-0 mb-5 bold-text">Pepper.</h3>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-4 col-12">
+                            <h6 class="mb-3 mb-lg-4 bold-text "><b>MENU</b></h6>
+                            <ul class="list-unstyled">
+                                <li>Home</li>
+                                <li>About</li>
+                                <li>Blog</li>
+                                <li>Portfolio</li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-4 col-12">
+                            <h6 class="mb-3 mb-lg-4 text-muted bold-text mt-sm-0 mt-5"><b>ADDRESS</b></h6>
+                            <p class="mb-1">605, RATAN ICON BUILDING</p>
+                            <p>SEAWOODS SECTOR</p>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xl-8 col-md-4 col-sm-4 col-auto my-md-0 mt-5 order-sm-1 order-3 align-self-end">
+                            <p class="social text-muted mb-0 pb-0 bold-text"> <span class="mx-2"><i class="fa fa-facebook" aria-hidden="true"></i></span> <span class="mx-2"><i class="fa fa-linkedin-square" aria-hidden="true"></i></span> <span class="mx-2"><i class="fa fa-twitter" aria-hidden="true"></i></span> <span class="mx-2"><i class="fa fa-instagram" aria-hidden="true"></i></span> </p><small class="rights"><span>&#174;</span> Pepper All Rights Reserved.</small>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-4 col-auto order-1 align-self-end ">
+                            <h6 class="mt-55 mt-2 text-muted bold-text"><b>ANIRUDH SINGLA</b></h6><small> <span><i class="fa fa-envelope" aria-hidden="true"></i></span> anirudh@gmail.com</small>
+                        </div>
+                        <div class="col-xl-2 col-md-4 col-sm-4 col-auto order-2 align-self-end mt-3 ">
+                            <h6 class="text-muted bold-text"><b>RISHABH SHEKHAR</b></h6><small><span><i class="fa fa-envelope" aria-hidden="true"></i></span> rishab@gmail.com</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</footer>
+</body>
+</html>

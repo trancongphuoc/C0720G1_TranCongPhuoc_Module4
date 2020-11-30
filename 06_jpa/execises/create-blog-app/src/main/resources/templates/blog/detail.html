@@ -8,7 +8,7 @@
 <header th:replace="~{blog/layout::headerBlog}"></header>
 <div  style="font-size: 18px!important;" class="content container mt-5" th:object="${blog}" >
     <h1 class="text-center" th:text="${blog.title}"></h1>
-    <p th:text="${blog.content}"></p>
+    <pre th:text="${blog.content}"></pre>
 
     <p style="margin-left: 70%;font-size: 18px !important;">Author: <span  th:text="${blog.author}"></span></p>
 </div>

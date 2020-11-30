@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/blog/layout::headBlog}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{view/blog/layout::headerBlog}"></nav>
+<div class="content">
+    <div th:replace="~{view/blog/layout::sidebarBlog}"></div>
+    <div class="content-container container" th:object="${blog}">
+        <h1 class="text-center mt-3 mb-3" th:text="${blog.title}"></h1>
+        <pre th:text="${blog.content}"></pre>
+        <span  class="float-right" th:text="${blog.writer}"></span>
+    </div>
+</div>
+<div >
+    <footer th:replace="~{view/blog/layout::footerBlog}"></footer>
+</div>
+
+</body>
+</html>

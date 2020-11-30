@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/blog/layout::headBlog}">
+</head>
+<body>
+<nav class="header" th:replace="~{view/blog/layout::headerBlog}">
+</nav>
+
+<div class="content">
+
+    <div th:replace="~{view/blog/layout::sidebarBlog}">
+    </div>
+
+    <div class="content-container">
+        <div style=" clear: both" th:each="blog : ${blogList}">
+            <a th:href="@{/blog/detail(id=${blog.id})}">
+            <img th:src="${blog.image}" class="float-left" style="margin-right: 30px; margin-left: 25px; margin-bottom: 30px" alt=""
+                 width="300px">
+            </a>
+            <a th:href="@{/blog/detail(id=${blog.id})}">
+            <h2 th:text="${blog.title}" style="clear: right!important; color: black "></h2>
+            </a>
+            <label th:text="${blog.content.substring(0,10)}"></label><span>...</span>
+            <br>
+
+            <a th:href="@{/blog/detail(id=${blog.id})}">Continue</a>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" style=" margin-left: 40%; margin-top: 10%">
+                <li class="page-item">
+                    <a th:if="${blogList.hasPrevious()}" th:href="@{/blog/home(page=${blogList.number - 1}, categoryId=${categoryId}, title=${title})}" class="page-link">Previous</a></li>
+                <li class="page-item">
+                    <a th:if="${blogList.number + 1 > 1}" class="page-link" th:text="${blogList.number}">2</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" th:text="${blogList.number + 1}">2</a>
+                </li>
+                <li class="page-item">
+                    <a th:if="${blogList.number + 1 < blogList.totalPages}" class="page-link" th:text="${blogList.number + 2}">2</a>
+                </li>
+                <li class="page-item"><a th:if="${blogList.hasNext()}" th:href="@{/blog/home(page=${blogList.number + 1}, categoryId=${categoryId}, title=${title})}" class="page-link">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+</div>
+<footer class="footer" th:replace="~{view/blog/layout::footerBlog}">
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/blog/layout::headBlog}">
+</head>
+<body>
+<nav class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/blog">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" href="/blog">Home <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <th:block th:each="category : ${categoryList}">
+                            <a th:href="@{/blog/list(categoryId=${category.id})}" class="dropdown-item" th:text="${category.name}" th:value="${category.id}">Action</a>
+                        </th:block>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-manage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Manage
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown-manage">
+                        <a class="dropdown-item" href="/blog/create">Create New Blog</a>
+                        <a class="dropdown-item" href="/blog/list">Another action</a>
+                    </div>
+                </li>
+            </ul>
+            <form action="/blog/list" class="form-inline my-2 my-lg-0">
+                <input name="title" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</nav>
+<div class="content">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Day write</th>
+                <th>Writer</th>
+                <th>Category</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="blog : ${blogList}">
+                <td th:text="${blog.id}"></td>
+                <td th:text="${blog.title}"></td>
+                <td><span th:text="${blog.content.substring(0,20)}"></span>...</td>
+                <td th:text="${blog.dayWrite}"></td>
+                <td th:text="${blog.writer}"></td>
+                <td th:text="${blog.category.name}"></td>
+                <td><a th:href="@{/blog/update(id=${blog.id})}"  class="btn btn-outline-primary">Update</a></td>
+                <td><a th:onclick="'onDel('+${blog.id}+')'" class="btn btn-outline-danger"  data-toggle="modal" data-target="#modelId">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a th:if="${blogList.hasPrevious()}" th:href="@{/blog/list(page=${blogList.number - 1}, categoryId=${categoryId}, title = ${title})}" class="page-link">Previous</a></li>
+                <li class="page-item">
+                    <a th:if="${blogList.number + 1 > 1}" class="page-link" th:text="${blogList.number}">2</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" th:text="${blogList.number + 1}">2</a>
+                </li>
+                <li class="page-item">
+                    <a th:if="${blogList.number + 1 < blogList.totalPages}" class="page-link" th:text="${blogList.number + 2}">2</a>
+                </li>
+                <li class="page-item"><a th:if="${blogList.hasNext()}" th:href="@{/blog/list(page=${blogList.number + 1}, categoryId=${categoryId}, title = ${title})}" class="page-link">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/blog/delete" method="post">
+            <div class="modal-body">
+                <h2 style="color: red">Are you delete this blog ?</h2>
+                <input type="hidden" id="id" name="id">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-outline-danger">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onDel(id) {
+        // $("#id").value(id);
+        document.getElementById("id").value = id;
+    }
+</script>
+</body>
+</html>
