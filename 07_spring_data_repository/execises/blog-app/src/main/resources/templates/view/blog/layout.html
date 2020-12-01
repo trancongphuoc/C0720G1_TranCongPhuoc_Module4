@@ -22,7 +22,7 @@
         .sidebar-container {
             position: absolute;
             width: 220px;
-            height: 134%;
+            height: 190%;
             left: 0;
             overflow-x: hidden;
             overflow-y: auto;
@@ -112,20 +112,20 @@
         /*=------------------------------------------------*/
         @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 
-        body {
-            background: linear-gradient(0deg, #fff, 50%, #DEEEFE);
-            font-family: 'Rubik', sans-serif;
-            /*background: #455A64;*/
-            height: 100 !important
-        }
+        /*body {*/
+        /*    background: linear-gradient(0deg, #fff, 50%, #DEEEFE);*/
+        /*    font-family: 'Rubik', sans-serif;*/
+        /*    !*background: #455A64;*!*/
+        /*    height: 100% !important*/
+        /*}*/
 
         .container-fluid {
             overflow: hidden;
             margin-top: 250px;
-            background: #262626;
+            background: #1a1a1a;
             color: #627482 !important;
             margin-bottom: 0;
-            padding-bottom: 0
+            padding-bottom: 0;
         }
 
         small {
@@ -156,7 +156,7 @@
 <body>
 <nav class="header" th:fragment="headerBlog">
     <a href="/blog">
-        <img src="image/logo.png" width="100%">
+        <img src="/image/logo.png" width="100%">
     </a>
 
 
@@ -219,8 +219,8 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                <a href="/blog/list">
+                    <i class="fa fa-tachometer" aria-hidden="true"></i> Manage
                 </a>
             </li>
             <li class="header">Another Menu</li>
@@ -266,7 +266,7 @@
                 <div class="col-11">
                     <div class="row ">
                         <div class="col-xl-8 col-md-4 col-sm-4 col-12 my-auto mx-auto a">
-                            <h3 class="text-muted mb-md-0 mb-5 bold-text">Pepper.</h3>
+<!--                            <h3 class="text-muted mb-md-0 mb-5 bold-text">Pepper.</h3>-->
                         </div>
                         <div class="col-xl-2 col-md-4 col-sm-4 col-12">
                             <h6 class="mb-3 mb-lg-4 bold-text "><b>MENU</b></h6>
