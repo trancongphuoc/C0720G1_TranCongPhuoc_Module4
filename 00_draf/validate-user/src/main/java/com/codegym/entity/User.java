@@ -2,14 +2,13 @@ package com.codegym.entity;
 
 
 
-import com.codegym.common.Validation;
+import com.codegym.common.Validator;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import javax.persistence.*;
 
 @Entity(name = "user")
-public class User implements Validator {
+public class User implements org.springframework.validation.Validator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,21 +99,21 @@ public class User implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        if (!Validation.validateName(user.firstName)) {
+        if (!Validator.validateName(user.firstName)) {
             errors.rejectValue("firstName", "first-name.wrong");
         }
-        if (!Validation.validateName(user.lastName)) {
+        if (!Validator.validateName(user.lastName)) {
             errors.rejectValue("lastName", "last-name.wrong");
         }
-        if (!Validation.validatePhoneNumber(user.phoneNumber)) {
+        if (!Validator.validatePhoneNumber(user.phoneNumber)) {
             errors.rejectValue("phoneNumber", "phone-number.wrong");
         }
         if (user.dateOfBirth.equals("")) {
             errors.rejectValue("dateOfBirth", "date-of-birth-empty.wrong");
-        } else if (!Validation.validateDateOfBirth(user.dateOfBirth)) {
+        } else if (!Validator.validateDateOfBirth(user.dateOfBirth)) {
             errors.rejectValue("dateOfBirth", "date-of-birth.wrong");
         }
-        if (!Validation.validateEmail(user.email)) {
+        if (!Validator.validateEmail(user.email)) {
             errors.rejectValue("email", "email.wrong");
         }
     }

@@ -4,12 +4,7 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validation {
-
-    public static void main(String[] args) {
-        String numberPhone = "090123456";
-        System.out.println(validatePhoneNumber(numberPhone));
-    }
+public class Validator {
 
     private static Pattern pattern;
     private static Matcher matcher;

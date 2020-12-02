@@ -34,27 +34,27 @@
             <div class="form-group row">
                 <label for="firstName" class="col-form-label col-2">First name:</label>
                 <input type="text" class="form-control col-7" th:field="*{firstName}">
-                <p th:if="${#fields.hasErrors('firstName')}" class="form-control col-7" th:errors="*{firstName}"></p>
+                <p class="form-control col-7" th:errors="*{firstName}"></p>
             </div>
             <div class="form-group row ">
                 <label for="lastName" class="col-form-label col-2">Last name:</label>
                 <input type="text" class="form-control col-7" th:field="*{lastName}">
-                <p th:if="${#fields.hasErrors('lastName') }" class="form-control col-7" th:errors="*{lastName}"></p>
+                <p class="form-control col-7" th:errors="*{lastName}"></p>
             </div>
             <div class="form-group row">
                 <label for="phoneNumber" class="col-form-label col-2">Phone number:</label>
                 <input type="text" class="form-control col-7" th:field="*{phoneNumber}">
-                <p th:if="${#fields.hasErrors('phoneNumber')}" class="form-control col-7" th:errors="*{phoneNumber}"></p>
+                <p class="form-control col-7" th:errors="*{phoneNumber}"></p>
             </div>
             <div class="form-group row">
                 <label for="dateOfBirth" class="col-form-label col-2">Date of birth:</label>
                 <input type="date" class="form-control col-7" th:field="*{dateOfBirth}">
-                <p th:if="${#fields.hasErrors('dateOfBirth')}" class="form-control col-7" th:errors="*{dateOfBirth}"></p>
+                <p class="form-control col-7" th:errors="*{dateOfBirth}"></p>
             </div>
             <div class="form-group row">
                 <label for="email" class="col-form-label col-2">Email:</label>
                 <input type="text" class="form-control col-7" th:field="*{email}">
-                <p th:if="${#fields.hasErrors('email')}" class="form-control col-7" th:errors="*{email}"></p>
+                <p class="form-control col-7" th:errors="*{email}"></p>
             </div>
             <input type="submit" class="btn btn-outline-success">
         </form>

@@ -1,31 +1,39 @@
 package com.codegym.entity;
 
-
-import com.codegym.common.Validation;
-import org.springframework.validation.Errors;
+import com.codegym.annotation.Age;
+import com.codegym.annotation.Email;
+import com.codegym.annotation.Name;
+import com.codegym.annotation.PhoneNumber;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity(name = "user")
-public class User implements org.springframework.validation.Validator {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Name(message = "Please input format correct")
     @Column(name = "first_name")
     private String firstName;
 
+    @Name(message = "Please input format correct")
     @Column(name = "last_name")
     private String lastName;
 
+    @PhoneNumber(message = "Please input format correct")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotBlank(message = "Field not empty")
+    @Age
     @Column(name = "date_of_birth", columnDefinition = "DATE")
     private String dateOfBirth;
 
+    @Email(message = "Email format exception")
     @Column(name = "email")
     private String email;
 
@@ -89,29 +97,4 @@ public class User implements org.springframework.validation.Validator {
         this.email = email;
     }
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-        User user = (User) target;
-
-        if (!Validation.validateName(user.firstName)) {
-            errors.rejectValue("firstName", "first-name.wrong");
-        }
-        if (!Validation.validateName(user.lastName)) {
-            errors.rejectValue("lastName", "last-name.wrong");
-        }
-        if (!Validation.validatePhoneNumber(user.phoneNumber)) {
-            errors.rejectValue("phoneNumber", "phone-number.wrong");
-        }
-        if (!Validation.validateDateOfBirth(user.dateOfBirth)) {
-            errors.rejectValue("dateOfBirth", "date-of-birth.wrong");
-        }
-        if (!Validation.validateEmail(user.email)) {
-            errors.rejectValue("email", "email.wrong");
-        }
-    }
 }
