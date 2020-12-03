@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/home::head}">
+</head>
+<body>
+<nav th:replace="~{view/home::header}"></nav>
+<h1 class="text-center mt-5 mb-5">Book</h1>
+
+<a class="btn btn-outline-success ml-3 mb-3">Add new book</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>See</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${bookList}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.description}"></td>
+        <td th:text="${book.amount}"></td>
+        <td th:text="${book.category.name}"></td>
+        <td><a href="" class="btn btn-outline-primary">Update</a></td>
+        <td><a href="" class="btn btn-outline-danger">Delete</a></td>
+        <td><a th:href="@{/book/detail(idBook=${book.id},idMember=${idMember})}" class="btn btn-outline-warning">See</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/home::head}">
+</head>
+<body>
+<nav th:replace="~{view/home::header}"></nav>
+<h1 class="text-center mt-5 mb-5">Member</h1>
+
+<a class="btn btn-outline-success ml-3 mb-3">Add new book</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Date of birth</th>
+        <th>gender</th>
+        <th>idCard</th>
+        <th>Number phone</th>
+        <th>Borrow</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${memberList}">
+        <td th:text="${member.id}"></td>
+        <td th:text="${member.name}"></td>
+        <td th:text="${member.email}"></td>
+        <td th:text="${member.address}"></td>
+        <td th:text="${member.dateOfBirth}"></td>
+        <td th:text="${member.gender}"></td>
+        <td th:text="${member.idCard}"></td>
+        <td th:text="${member.numberPhone}"></td>
+        <td><a th:href="@{/book/manage(idMember=${member.id})}" class="btn btn-outline-warning">Borrow Book</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
