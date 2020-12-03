@@ -27,7 +27,11 @@
             <label for="" class="col-form-label col-2">Category: </label>
             <input th:field="*{category.name}" type="text" class="form-control col-7" readonly>
         </div>
-        <input style="margin-left: 700px" type="submit" th:value="Borrow" class="btn btn-outline-warning">
+        <a href="/book/manage" style="margin-left: 700px" type="submit" class="btn btn-outline-success">Back</a>
+        <th:block th:if="${idMember}">
+            <input  type="submit" value="Borrow" class="btn btn-outline-warning">
+        </th:block>
+
     </form>
 </div>
 </body>

@@ -28,7 +28,11 @@
         <td th:text="${member.email}"></td>
         <td th:text="${member.address}"></td>
         <td th:text="${member.dateOfBirth}"></td>
-        <td th:text="${member.gender}"></td>
+        <th:block th:switch="${member.gender}">
+            <td th:case="true">Male</td>
+            <td th:case="false">Female</td>
+            <td th:case="null">Female</td>
+        </th:block>
         <td th:text="${member.idCard}"></td>
         <td th:text="${member.numberPhone}"></td>
         <td><a th:href="@{/book/manage(idMember=${member.id})}" class="btn btn-outline-warning">Borrow Book</a></td>

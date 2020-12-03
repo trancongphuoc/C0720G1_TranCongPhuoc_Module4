@@ -27,19 +27,30 @@ public class BorrowBookCardServiceImpl implements BorrowBookCardService {
     }
 
     @Override
-    public BorrowBookCard save(BorrowBookCard borrowBookCard, Book book, Member member) {
+    public void save(BorrowBookCard borrowBookCard, Book book, Member member) {
         borrowBookCard.setDayStartBorrow(LocalDate.now().toString());
         borrowBookCard.setMember(member);
         borrowBookCard.setBook(book);
 
         book.setAmount(book.getAmount() - 1);
         bookService.save(book);
-        return borrowBookCardRepository.save(borrowBookCard);
+        borrowBookCardRepository.save(borrowBookCard);
 
     }
 
     @Override
     public BorrowBookCard findById(Integer id) {
         return borrowBookCardRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void update(BorrowBookCard borrowBookCard) {
+        borrowBookCard.setStatus(true);
+        borrowBookCard.setDayEndBorrow(LocalDate.now().toString());
+        borrowBookCardRepository.save(borrowBookCard);
+
+        Book book = borrowBookCard.getBook();
+        book.setAmount(book.getAmount() + 1);
+        bookService.save(book);
     }
 }

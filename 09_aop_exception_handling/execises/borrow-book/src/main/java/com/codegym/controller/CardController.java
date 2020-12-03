@@ -40,11 +40,29 @@ public class CardController {
                              @RequestParam Integer idBook,
                              RedirectAttributes redirectAttributes) {
 
+        if (bookService.findById(idBook).getAmount() == 0) {
+            redirectAttributes.addFlashAttribute("message", "It's over");
+            return "redirect:/book/manage";
+        }
+
         borrowBookCardService.save(new BorrowBookCard(), bookService.findById(idBook), memberService.findById(idMember));
 
         redirectAttributes.addFlashAttribute("idMember1", idMember);
 
         return "redirect:/book/manage";
     }
+
+    @GetMapping(value = "/give-back")
+    public String giveBackBook(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
+        if (borrowBookCardService.findById(id).getStatus()) {
+            redirectAttributes.addFlashAttribute("message", "Give back Failed");
+            return "redirect:/card/manage";
+        }
+        borrowBookCardService.update(borrowBookCardService.findById(id));
+        redirectAttributes.addFlashAttribute("message","Give back successfully");
+        return "redirect:/card/manage";
+    }
+
+
 
 }

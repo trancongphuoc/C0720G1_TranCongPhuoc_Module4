@@ -10,7 +10,9 @@ public interface BorrowBookCardService {
 
     List<BorrowBookCard> findAll();
 
-    BorrowBookCard save(BorrowBookCard borrowBookCard, Book book, Member member);
+    void save(BorrowBookCard borrowBookCard, Book book, Member member);
 
     BorrowBookCard findById(Integer id);
+
+    void update(BorrowBookCard borrowBookCard);
 }
