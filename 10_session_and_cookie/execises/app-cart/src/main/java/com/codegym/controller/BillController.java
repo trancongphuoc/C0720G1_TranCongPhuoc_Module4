@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,12 +32,19 @@ public class BillController {
 
     @GetMapping("/pay")
     public String pay(
-                      @ModelAttribute User user,
-                      @ModelAttribute(name = "cart") ArrayList<Product> cart,
-                      HttpServletRequest request) {
+            @ModelAttribute User user,
+            @ModelAttribute(name = "cart") ArrayList<Product> cart,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
+        if (cart.isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "Cart is empty");
+            return "redirect:/product/list";
+        }
+
         billService.save(new Bill(),user, cart);
 
-        request.getSession().setAttribute("cart", new ArrayList<Product>());
+        cart.clear();
+//        request.getSession().setAttribute("cart", null);
         return "redirect:/product/list";
     }
 
