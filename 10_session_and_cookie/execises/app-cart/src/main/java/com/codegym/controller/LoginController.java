@@ -22,7 +22,10 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String goLogin(Model model) {
+    public String goLogin(Model model , @ModelAttribute User user) {
+        if (user.getUsername() != null) {
+            return "redirect:/product/list";
+        }
         model.addAttribute("user", new User());
         return "view/user/login";
     }

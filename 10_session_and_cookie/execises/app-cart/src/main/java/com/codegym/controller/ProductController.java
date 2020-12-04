@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @SessionAttributes({"user","sessionDetail","cart"})
@@ -30,7 +29,6 @@ public class ProductController {
     @GetMapping("/list")
     public String goList(Model model) {
         model.addAttribute("productList", productService.findAll());
-        model.addAttribute("cart", new ArrayList<Product>());
         return "view/product/list";
     }
 
@@ -39,7 +37,7 @@ public class ProductController {
     public String addProduct(@RequestParam Integer id,
                              Model model,
                              RedirectAttributes redirectAttributes,
-                             @ModelAttribute ArrayList<Product> cart) {
+                             @ModelAttribute(name = "cart") ArrayList<Product> cart) {
 
         if (productService.findById(id).getAmount() == 0) {
             redirectAttributes.addFlashAttribute("message", "It's over");
@@ -59,7 +57,7 @@ public class ProductController {
     public String detail(@RequestParam Integer id, Model model) {
 
         model.addAttribute("product", productService.findById(id));
-        model.addAttribute("productList", new ArrayList<>());
+//        model.addAttribute("productList", new ArrayList<>());
 //        if (user == null) {
 //            user = null;
 //            model.addAttribute("sessionDetail", id);
@@ -74,11 +72,11 @@ public class ProductController {
             return "redirect:/home/login";
         }
 //        model.addAttribute("productList", cart);
-         Integer[] arr = new Integer[cart.size()];
-        for (int i = 0; i < cart.size(); i++) {
-            arr[i] = cart.get(i).getId();
-        }
-        model.addAttribute("arr", arr);
+//         Integer[] arr = new Integer[cart.size()];
+//        for (int i = 0; i < cart.size(); i++) {
+//            arr[i] = cart.get(i).getId();
+//        }
+//        model.addAttribute("arr", arr);
         return "view/product/cart";
     }
 
@@ -86,7 +84,7 @@ public class ProductController {
     public String deleteProduct(@RequestParam Integer index,
                                 @RequestParam Integer idProduct,
                                 Model model,
-                                @ModelAttribute ArrayList<Product> cart) {
+                                @ModelAttribute(name = "cart") ArrayList<Product> cart) {
         cart.remove(index-1);
 
         Product product = productService.findById(idProduct);

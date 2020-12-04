@@ -17,7 +17,6 @@
         <th>Name</th>
         <th>Price</th>
         <th>Description</th>
-        <th>Amount</th>
         <th>See</th>
         <th>Buy</th>
     </tr>
@@ -28,14 +27,13 @@
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${product.description}"></td>
-        <td th:text="${product.amount}"></td>
         <td><a th:href="@{/product/detail(id=${product.id})}" class="btn btn-outline-success">See</a></td>
         <td><a th:href="@{/product/delete(index=${state.count}, idProduct=${product.id})}" class="btn btn-outline-danger">Delete</a></td>
     </tr>
     </tbody>
 </table>
 
-<a th:href="@{/bill/pay(arr=${arr})}" style="margin-right: 180px; width: 200px;" href="" class="btn btn-outline-primary float-right">Pay</a>
+<a th:href="@{/bill/pay}" style="margin-right: 180px; width: 200px;" href="" class="btn btn-outline-primary float-right">Pay</a>
 
 </body>
 </html>

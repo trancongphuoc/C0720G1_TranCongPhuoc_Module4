@@ -4,7 +4,6 @@ import com.codegym.entity.Bill;
 import com.codegym.entity.BillDetail;
 import com.codegym.entity.Product;
 import com.codegym.entity.User;
-import com.codegym.repository.BillDetailRepository;
 import com.codegym.repository.BillRepository;
 import com.codegym.service.BillDetailService;
 import com.codegym.service.BillService;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -28,18 +27,17 @@ public class BillServiceImpl implements BillService {
     ProductService productService;
 
     @Override
-    public void save(Bill bill, User user, Integer[] arr) {
+    public void save(Bill bill, User user, ArrayList<Product> productArrayList) {
         Double totalMoney = 0.0;
         bill.setDateBuy(LocalDate.now().toString());
 //        bill.setUser(user);
         bill = billRepository.save(bill);
-        System.out.println(bill.getId());
-        for (Integer productId : arr) {
+        for (Product product : productArrayList) {
             BillDetail billDetail = new BillDetail();
             billDetail.setBill(bill);
-            Product product = productService.findById(productId);
             totalMoney += product.getPrice();
-            billDetail.setProduct(product);
+            Product product1 = productService.findById(product.getId());
+            billDetail.setProduct(product1);
             billDetailService.save(billDetail);
         }
 

@@ -4,9 +4,9 @@ import com.codegym.entity.Bill;
 import com.codegym.entity.Product;
 import com.codegym.entity.User;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface BillService {
 
-    void save(Bill bill, User user, Integer[] arr);
+    void save(Bill bill, User user, ArrayList<Product> productArrayList);
 }
