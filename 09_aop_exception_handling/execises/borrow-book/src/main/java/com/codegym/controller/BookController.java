@@ -24,9 +24,10 @@ public class BookController {
 
 
     @GetMapping(value = "/manage")
-    public String goManage(Model model, @RequestParam Optional<Integer> idMember) {
+    public String goManage(Model model, @RequestParam(name = "idMember") Optional<Integer> idMember) {
         model.addAttribute("bookList", bookService.findAll());
         model.addAttribute("idMember", idMember.orElse(null));
+//        System.out.println(idMember1.orElse(null));
 
         return "view/book/manage";
     }

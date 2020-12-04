@@ -1,6 +1,8 @@
 package com.codegym.entity;
 
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class BorrowBookCard {
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private Member member;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private Boolean status;
 
     @Column(name = "day_start_borrow", columnDefinition = "DATE")

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/home::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{view/home::header}">
+</nav>
+
+<h1 class="text-center">Product</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>See</th>
+        <th>Buy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product,state : ${cart}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.amount}"></td>
+        <td><a th:href="@{/product/detail(id=${product.id})}" class="btn btn-outline-success">See</a></td>
+        <td><a th:href="@{/product/delete(index=${state.count}, idProduct=${product.id})}" class="btn btn-outline-danger">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/bill/pay(arr=${arr})}" style="margin-right: 180px; width: 200px;" href="" class="btn btn-outline-primary float-right">Pay</a>
+
+</body>
+</html>

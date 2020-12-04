@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/home::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{view/home::header}">
+</nav>
+<div class="container">
+<h1 class="text-center mt-5" style="color: green">Login</h1>
+<form style="margin-left: 250px;margin-top: 50px" action="/home/login" method="post" th:object="${user}">
+    <input type="hidden" th:if="${sessionDetail}" name="sessionDetail" th:value="${sessionDetail}">
+    <div class="form-group">
+        <div class="row">
+            <label for="username" class="col-form-label col-2">Username: </label>
+            <input type="text" class="form-control col-5" th:field="*{username}">
+        </div>
+        <p style="color: red; margin-left: 250px" th:if="${errorUsername}" th:text="${errorUsername}"></p>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label for="password" class="col-form-label col-2">Password: </label>
+            <input type="password" class="form-control col-5" th:field="*{password}">
+        </div>
+        <p style="color: red; margin-left: 250px" th:if="${errorPassword}" th:text="${errorPassword}"></p>
+    </div>
+    <input type="submit" th:value="Login" class="btn btn-outline-success" style="width: 370px; margin-left: 134px">
+</form>
+</div>
+</body>
+</html>

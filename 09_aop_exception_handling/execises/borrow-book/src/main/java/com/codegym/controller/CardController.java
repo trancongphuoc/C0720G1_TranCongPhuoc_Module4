@@ -47,17 +47,17 @@ public class CardController {
 
         borrowBookCardService.save(new BorrowBookCard(), bookService.findById(idBook), memberService.findById(idMember));
 
-        redirectAttributes.addFlashAttribute("idMember1", idMember);
+        redirectAttributes.addFlashAttribute("idMember", idMember);
 
         return "redirect:/book/manage";
     }
 
     @GetMapping(value = "/give-back")
     public String giveBackBook(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
-        if (borrowBookCardService.findById(id).getStatus()) {
-            redirectAttributes.addFlashAttribute("message", "Give back Failed");
-            return "redirect:/card/manage";
-        }
+//        if (borrowBookCardService.findById(id).getStatus()) {
+//            redirectAttributes.addFlashAttribute("message", "Give back Failed");
+//            return "redirect:/card/manage";
+//        }
         borrowBookCardService.update(borrowBookCardService.findById(id));
         redirectAttributes.addFlashAttribute("message","Give back successfully");
         return "redirect:/card/manage";

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{view/home::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{view/home::header}">
+</nav>
+
+<h1 class="text-center">Product</h1>
+<h1 class="text-center" style="color: red" th:text="${message}"></h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Name Product</th>
+        <th>Name User</th>
+        <th>Total Money</th>
+<!--        <th>Amount</th>-->
+        <th>See</th>
+        <th>Buy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="billDetail,state : ${billList}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${billDetail.bill.id}"></td>
+        <td th:text="${billDetail.product.name}"></td>
+        <td th:text="${billDetail.bill.user.username}"></td>
+        <td th:text="${billDetail.bill.totalMoney}"></td>
+<!--        <td th:text="${product.amount}"></td>-->
+<!--        <td><a th:href="@{/product/detail(id=${product.id})}" class="btn btn-outline-success">See</a></td>-->
+<!--        <td th:if="${user == null}"><a href="/home/login"  class="btn btn-outline-primary">Buy</a></td>-->
+<!--        <td th:if="${user}"><a th:href="@{/product/add-product(id=${product.id})}" class="btn btn-outline-primary">Buy</a></td>-->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

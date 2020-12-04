@@ -30,5 +30,5 @@ public class BookLogger {
         System.out.println(count);
     }
 
-//    @AfterReturning(po)
+//    @AfterReturning(thr)
 }
