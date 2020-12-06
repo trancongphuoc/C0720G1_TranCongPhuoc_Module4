@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</nav>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+<h1 class="text-center">Book</h1>
+<h2 class="text-center" th:text="${message}" style="color: red"></h2>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Rent cost</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>See</th>
+            <th>Borrow</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book,state : ${bookList}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.rentCost}"></td>
+            <td th:text="${book.amount}"></td>
+            <td th:text="${book.category.name}"></td>
+            <td th:text="${book.desctiption}"></td>
+            <td><a th:href="@{/library/detail/{id}(id=${book.id})}" class="btn btn-outline-success">See</a></td>
+            <td><a th:href="@{/library/borrow/{id}(id=${book.id})}" class="btn btn-outline-primary">Borrow</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a th:if="${bookList.hasPrevious()}" th:href="@{/library/list(page=${bookList.number - 1})}" class="page-link">Previous</a></li>
+            <li class="page-item">
+                <a th:if="${bookList.number + 1 > 1}" class="page-link" th:text="${bookList.number}">2</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" th:text="${bookList.number + 1}">2</a>
+            </li>
+            <li class="page-item">
+                <a th:if="${bookList.number + 1 < bookList.totalPages}" class="page-link" th:text="${bookList.number + 2}">2</a>
+            </li>
+            <li class="page-item"><a th:if="${bookList.hasNext()}" th:href="@{/library/list(page=${bookList.number + 1})}" class="page-link">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+
+</body>
+</html>

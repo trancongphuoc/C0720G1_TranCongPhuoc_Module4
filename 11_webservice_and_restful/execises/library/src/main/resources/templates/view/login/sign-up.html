@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style th:replace="~{view/layout::style}"></style>
+</head>
+<body>
+<div th:replace="~{view/layout::header}"></div>
+<div class="container">
+    <h1 style="margin-top: 10%; color: #ffda66" class="text-center">Register</h1>
+    <form style="margin-left: 250px;margin-top: 10%" action="/login/sign-up" method="post" th:object="${user}">
+        <!--        <input type="hidden" th:if="${sessionDetail}" name="sessionDetail" th:value="${sessionDetail}">-->
+        <div class="form-group">
+            <p style="font-weight: bolder;color: #ffb2b5; margin-left: 250px" th:if="${errorUser}" th:text="${errorUser}"></p>
+            <div class="row">
+                <label style="font-weight: bolder; color: #ebe19f" for="username" class="col-form-label col-2">Username: </label>
+                <input type="text" class="form-control col-5" th:field="*{username}" placeholder="Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label style="font-weight: bolder; color: #ebe19f" for="password" class="col-form-label col-2">Password: </label>
+                <input type="password" class="form-control col-5" th:field="*{password}" placeholder="Password">
+            </div>
+            <p style="font-weight: bolder;color: white; margin-left: 250px" th:if="${errorPassword}" th:text="${errorPassword}"></p>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-form-label col-2"></label>
+            <input type="checkbox" name="checkbox" value="robot">
+            <label for="" style="color: white">I'm not robot</label>
+            <label th:if="${errorCheckbox}" for="" style="color: #ff0011">Click me</label>
+            <br>
+
+            <label for="" class="col-form-label col-2"></label>
+            <input type="submit" th:value="Register" class="btn btn-primary" style="width:39.5%;">
+        </div>
+    </form>
+</div>
+<div th:replace="~{view/layout::bootstrap}"></div>
+</body>
+</html>
