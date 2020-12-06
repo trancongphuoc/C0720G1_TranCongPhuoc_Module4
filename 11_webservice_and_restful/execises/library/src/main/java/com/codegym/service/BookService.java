@@ -19,4 +19,6 @@ public interface BookService {
     void giveBack(Book book);
 
     void save(Book book);
+
+    List<Book> findByCategory(Integer categoryId);
 }

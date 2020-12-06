@@ -42,5 +42,13 @@ public class BookRestController {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
+    @GetMapping("list-by-category/{idCategory}")
+    public ResponseEntity<List<Book>> findByCategory(@PathVariable Integer idCategory) {
+        if (bookService.findByCategory(idCategory).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bookService.findByCategory(idCategory),HttpStatus.OK);
+    }
+
 
 }
