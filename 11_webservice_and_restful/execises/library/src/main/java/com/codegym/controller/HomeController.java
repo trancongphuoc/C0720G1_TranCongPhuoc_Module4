@@ -20,11 +20,9 @@ public class HomeController {
     UserService userService;
 
     @GetMapping("")
-    public String goHome(Model model,
-                         @CookieValue(defaultValue = "") String cookieUsername,
-                         @CookieValue(defaultValue = "") String cookiePassword) {
-        if (!cookieUsername.equals("")) {
-            model.addAttribute("user",userService.findByName(cookieUsername));
+    public String goHome(Model model) {
+        if (LoginController.getCookieUsername() != null) {
+            model.addAttribute("user",userService.findByName(LoginController.getCookieUsername().getValue()));
         }
         return "view/home";
     }

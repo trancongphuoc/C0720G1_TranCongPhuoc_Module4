@@ -1,7 +1,6 @@
 package com.codegym.controller;
 
 import com.codegym.entity.Book;
-import com.codegym.entity.User;
 import com.codegym.service.BookService;
 import com.codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

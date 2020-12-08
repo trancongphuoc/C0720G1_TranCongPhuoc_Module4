@@ -21,4 +21,7 @@ public interface BookService {
     void save(Book book);
 
     List<Book> findByCategory(Integer categoryId);
+
+
+    List<Book> findAllByName(String name);
 }

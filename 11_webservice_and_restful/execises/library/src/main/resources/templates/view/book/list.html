@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/bootstrap/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 </nav>
 <div th:replace="~{view/layout::bootstrap}"></div>
 <div th:replace="~{view/layout::header}"></div>
-<h1 class="text-center">Book</h1>
+<h1 class="text-center mt-5 mb-5">Book</h1>
 <h2 class="text-center" th:text="${message}" style="color: red"></h2>
+<div class="row">
+    <input style="margin-left: 500px" type="text" class="form-control col-4" id="search" value="">
+    <button id="btn-search" class="btn btn-outline-primary">Search</button>
+</div>
 <div>
-    <table class="table">
+    <table class="table" id="table">
         <thead>
         <tr>
             <th>ID</th>
@@ -25,7 +30,7 @@
             <th>Borrow</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
         <tr th:each="book,state : ${bookList}">
             <td th:text="${book.id}"></td>
             <td th:text="${book.name}"></td>
@@ -55,8 +60,90 @@
             <li class="page-item"><a th:if="${bookList.hasNext()}" th:href="@{/library/list(page=${bookList.number + 1})}" class="page-link">Next</a></li>
         </ul>
     </nav>
+
+
+    <div class="d-flex justify-content-around">
+        <button class="btn btn-outline-success" id="readMore">Read more...</button>
+        <input id="indexPage" type="hidden" th:value="${bookList.number}">
+    </div>
 </div>
 
+<script>
+    $('#readMore').click(function () {
+        let indexPage = parseInt($('#indexPage').val()) +1;
+        $('#indexPage').val(parseInt($('#indexPage').val()) + 1);
 
+        $.ajax({
+            type : "GET",
+            url : "http://localhost:8080/api-book/list?page="+indexPage,
+            dataType : "json",
+            success: function (bookList) {
+                if (bookList == null) {
+                    $('#readMore').hide();
+                    return;
+                }
+                let table = "";
+
+                for (let j = 0; j < bookList.length; j++) {
+                    table += "<tr>" +
+                        "            <td>"+bookList[j].id+"</td>\n" +
+                        "            <td>"+bookList[j].name+"</td>\n" +
+                        "            <td>"+bookList[j].author+"</td>\n" +
+                        "            <td>"+bookList[j].rentCost+"</td>\n" +
+                        "            <td>"+bookList[j].amount+"</td>\n" +
+                        "            <td>"+bookList[j].category.name+"</td>\n" +
+                        "            <td>"+bookList[j].description+"</td>\n" +
+                        "            <td><a href=\"/library/detail/"+bookList[j].id+"\" class=\"btn btn-outline-success\">See</a></td>\n" +
+                        "            <td><a href=\"/library/borrow/"+bookList[j].id+"\" class=\"btn btn-outline-primary\">Borrow</a></td>"
+                        "        </tr>";
+                }
+
+                // document.getElementById("table").insertRow(-1).innerHTML = table;
+
+                console.log(bookList[0].id);
+                // $('#tbody').text(table);
+                document.getElementById("tbody").innerHTML += table;
+            }, error : function () {
+                // $('#readMore').style.display;
+            }
+        })
+    });
+
+
+
+
+    $('#btn-search').click(function () {
+        let search = $('#search').val();
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api-book/find-by-name/" + search,
+            contentType: "application/json; charset=utf-8",
+            success: function(bookList) {
+                let table = "";
+
+                for (let j = 0; j < bookList.length; j++) {
+                    table += "<tr>" +
+                        "            <td>"+bookList[j].id+"</td>\n" +
+                        "            <td>"+bookList[j].name+"</td>\n" +
+                        "            <td>"+bookList[j].author+"</td>\n" +
+                        "            <td>"+bookList[j].rentCost+"</td>\n" +
+                        "            <td>"+bookList[j].amount+"</td>\n" +
+                        "            <td>"+bookList[j].category.name+"</td>\n" +
+                        "            <td>"+bookList[j].description+"</td>\n" +
+                        "            <td><a href=\"/library/detail/"+bookList[j].id+"\" class=\"btn btn-outline-success\">See</a></td>\n" +
+                        "            <td><a href=\"/library/borrow/"+bookList[j].id+"\" class=\"btn btn-outline-primary\">Borrow</a></td>"
+                    "        </tr>";
+                }
+
+                // document.getElementById("table").insertRow(-1).innerHTML = table;
+
+                console.log(bookList[0].id);
+                // $('#tbody').text(table);
+                document.getElementById("tbody").innerHTML += table;
+            }
+        })
+    })
+</script>
 </body>
 </html>

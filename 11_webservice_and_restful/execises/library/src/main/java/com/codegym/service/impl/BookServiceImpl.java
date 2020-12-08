@@ -59,4 +59,9 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByCategory(Integer categoryId) {
         return bookRepository.findAllByCategory_Id(categoryId);
     }
+
+    @Override
+    public List<Book> findAllByName(String name) {
+        return bookRepository.findAllByNameContaining(name);
+    }
 }

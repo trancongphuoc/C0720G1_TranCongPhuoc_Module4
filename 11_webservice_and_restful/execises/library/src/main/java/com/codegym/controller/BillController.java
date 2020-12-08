@@ -43,7 +43,11 @@ public class BillController {
     @GetMapping("/list")
     public String goBillList(@ModelAttribute User user, Model model) {
         // Nếu chưa có thông tin. phải đăng ký thông tin customer
-        if (user.getCustomer() == null) {
+        if (user.getCustomer() != null) {
+            if (user.getCustomer().getId() == null) {
+                return "redirect:/customer/";
+            }
+        } else {
             return "redirect:/customer/";
         }
 

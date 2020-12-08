@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 
+import com.codegym.entity.Book;
 import com.codegym.entity.User;
 import com.codegym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
-//@SessionAttributes("user")
-@RequestMapping("/login")
+@SessionAttributes("tempBill")
+@RequestMapping({"/login"})
 public class LoginController {
+
+    private static Cookie cookieUsername;
+    private static Cookie cookiePassword;
+
+
+    public static Cookie getCookieUsername() {
+        return cookieUsername;
+    }
+
+    public static Cookie getCookiePassword() {
+        return cookiePassword;
+    }
 
     @Autowired
     UserService userService;
@@ -27,10 +41,8 @@ public class LoginController {
 
     // Màn hình đăng nhập
     @GetMapping("")
-    public String goFormSignIn(Model model,
-                               @CookieValue(defaultValue = "") String cookieUsername,
-                               @CookieValue(defaultValue = "") String cookiePassword) {
-        model.addAttribute("user", new User(cookieUsername,cookiePassword));
+    public String goFormSignIn(Model model) {
+        model.addAttribute("user", new User());
         return "/view/login/sign-in";
     }
 
@@ -52,10 +64,11 @@ public class LoginController {
             return "redirect:/login/";
         } else {
             if (checkbox.orElse(null) != null) {
-                Cookie cookieUsername = new Cookie("cookieUsername", user.getUsername());
+                cookieUsername = new Cookie("cookieUsername", user.getUsername());
                 cookieUsername.setMaxAge(60);
-                Cookie cookiePassword = new Cookie("cookiePassword", user.getPassword());
+                cookiePassword = new Cookie("cookiePassword", user.getPassword());
                 cookiePassword.setMaxAge(60);
+
                 response.addCookie(cookieUsername);
                 response.addCookie(cookiePassword);
             }
@@ -100,9 +113,13 @@ public class LoginController {
 
     // Đăng xuất
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request, @ModelAttribute(name = "tempBill") List<Book> tempBill) {
         request.getSession().setAttribute("user", null);
-        return "view/home";
+        cookieUsername = null;
+        cookiePassword = null;
+
+        tempBill.clear();
+        return "redirect:/home/";
     }
 
 //    @ExceptionHandler(Exception.class)
