@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</nav>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+<th:block th:if="${tempBill}">
+    <h1 th:if="${tempBill.size() > 0}" class="text-center">Temp Bill</h1>
+    <h1 th:unless="${tempBill.size() > 0}" class="text-center">No Products</h1>
+</th:block>
+
+
+
+
+
+<div th:if="${tempBill}">
+    <table th:if="${tempBill.size() > 0}" class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Rent cost</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>See</th>
+            <th>Borrow</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book,state : ${tempBill}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.rentCost}"></td>
+            <td th:text="${book.category.name}"></td>
+            <td th:text="${book.desctiption}"></td>
+            <td><a th:href="@{/library/detail/{id}(id=${book.id})}" class="btn btn-outline-success">See</a></td>
+            <td><a th:href="@{/library/delete/{index}(index=${state.index})}" class="btn btn-outline-danger">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:if="${tempBill.size() > 0}" href="/bill/go-pay" class="btn btn-outline-primary float-right mr-5">Pay</a>
+</div>
+
+
+</body>
+</html>

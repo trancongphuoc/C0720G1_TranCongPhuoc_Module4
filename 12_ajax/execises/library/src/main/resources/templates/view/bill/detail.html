@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+
+<h1 class="text-center">Bill detail</h1>
+<div>
+    <div>
+        <form th:object="${bill}">
+<!--            <div class="form-group row">-->
+<!--                <label for="name" class="col-form-label col-2"></label>-->
+<!--                <input type="text" class="form-control col-7" th:field="*{name}" readonly/>-->
+<!--            </div>-->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name book</th>
+                    <th>Day start borrow</th>
+                    <th>Day give back</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="billDetail,state : ${bill.getBillDetailSet()}">
+                    <td th:text="${state.count}"></td>
+                    <td th:text="${billDetail.book.name}"></td>
+                    <td th:text="${bill.dayStartBorrow}"></td>
+                    <td th:text="${bill.dayEndBorrow}"></td>
+                </tr>
+                <tr>
+                    <th>Total Money: </th>
+                    <th th:text="${bill.totalMoney}"></th>
+                    <th></th>
+                    <td th:if="${bill.status == null || bill.status == false}"><a th:href="@{/bill/give-back/{id}(id=${bill.id})}" class="btn btn-outline-primary">Give back</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

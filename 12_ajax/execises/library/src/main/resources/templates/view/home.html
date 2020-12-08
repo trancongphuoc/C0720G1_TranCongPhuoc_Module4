@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style th:replace="~{view/layout::style}"></style>
+</head>
+<body>
+<div th:replace="~{view/layout::header}"></div>
+
+<div class="content">
+    <div style="margin-left: 43%; margin-top: 20%">
+        <a th:if="${user == null}" href="/login/" class="btn btn-success">Sign in</a>
+        <a th:if="${user == null}" href="/login/register" class="btn btn-primary">Sign up</a>
+    </div>
+</div>
+
+
+<div th:replace="~{view/layout::bootstrap}"></div>
+</body>
+</html>

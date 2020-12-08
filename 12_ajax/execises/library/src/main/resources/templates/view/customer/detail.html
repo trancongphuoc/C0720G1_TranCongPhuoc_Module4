@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+
+<h1 class="text-center mt-5 mb-5">User</h1>
+<div class="container">
+    <div>
+        <form action="/customer/save" method="post" th:object="${user}">
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Username: </label>
+                <input type="text" class="form-control col-7" th:field="*{username}" readonly/>
+            </div>
+            <div class="form-group row">
+                <label for="price" class="col-form-label col-2">Password: </label>
+                <a href="/customer/change-password" class="btn btn-outline-primary">Change password</a>
+            </div>
+            <div class="form-group row">
+                <label for="rentCost" class="col-form-label col-2">Name: </label>
+                <input type="text" class="form-control col-7" th:field="*{customer.name}"/>
+            </div>
+            <div class="form-group row">
+                <label for="category" class="col-form-label col-2">Gender: </label>
+                <select class="form-control col-7" th:field="*{customer.gender}">
+                    <option th:value="null">Other</option>
+                    <option th:value="0">Male</option>
+                    <option th:value="1">Female</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <label for="desctiption" class="col-form-label col-2">Date of birth: </label>
+                <input type="date" class="form-control col-7" th:field="*{customer.dateOfBirth}"/>
+            </div>
+            <div class="form-group row">
+                <label for="desctiption" class="col-form-label col-2">Email: </label>
+                <input type="text" class="form-control col-7" th:field="*{customer.email}"/>
+            </div>
+            <div class="form-group row">
+                <label for="desctiption" class="col-form-label col-2">Address: </label>
+                <input type="text" class="form-control col-7" th:field="*{customer.address}"/>
+            </div>
+            <div class="form-group row">
+                <label for="desctiption" class="col-form-label col-2">Number phone: </label>
+                <input type="text" class="form-control col-7" th:field="*{customer.numberPhone}"/>
+            </div>
+
+            <input type="hidden" class="form-control col-7" name="customer.user" th:value="${user.username}"/>
+
+            <a style="margin-left: 600px" href="/library/list" class="btn btn-outline-primary">Back</a>
+            <input type="submit" value="Save" class="btn btn-outline-primary">
+            <a href="/login/logout" class="btn btn-outline-danger">Logout</a>
+        </form>
+        <h2 class="text-center" style="color: green" th:text="${message}"></h2>
+    </div>
+</div>
+</body>
+</html>
