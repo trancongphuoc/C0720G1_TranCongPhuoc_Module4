@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+
+<h1 class="text-center">Book</h1>
+<div class="container">
+    <div>
+        <form action="/bill/pay" th:object="${bill}" method="post">
+
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Code borrow</label>
+                <input type="text" class="form-control col-7" th:field="*{codeBorrow}" readonly/>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Day start borrow:</label>
+                <input type="date" class="form-control col-7" th:field="*{dayStartBorrow}" readonly/>
+            </div>
+
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Day end borrow: </label>
+                <input type="date" class="form-control col-7" th:field="*{dayEndBorrow}"/>
+            </div>
+
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Total money</label>
+                <input type="text" class="form-control col-7" th:field="*{totalMoney}" readonly/>
+            </div>
+
+            <div class="form-group row">
+                <label for="name" class="col-form-label col-2">Book list your borrow</label>
+<!--                <input type="text" class="form-control col-7" th:field="*{totalMoney}" readonly/>-->
+                <select class="form-control col-7">
+                    <option th:each="book : ${tempBill}" th:text="${book.name}"></option>
+                </select>
+            </div>
+
+            <input type="hidden" name="customer" th:value="${appUser.customer.id}">
+
+            <a style="margin-left: 700px" href="/library/list" class="btn btn-outline-primary">Back</a>
+            <input class="btn btn-outline-primary" type="submit" th:value="Pay">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</nav>
+<div th:replace="~{view/layout::bootstrap}"></div>
+<div th:replace="~{view/layout::header}"></div>
+<h1 class="text-center">Bill</h1>
+<h2 class="text-center" style="color: red" th:text="${message}">Bill</h2>
+<div>
+    <form action="/bill/code-borrow">
+        <div class="form-group row">
+            <input style="margin-left: 60%" name="codeBorrow" type="text" class="form-control col-3" placeholder="Borrow">
+            <input type="submit" value="Submit" class="btn btn-outline-primary">
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code Borrow</th>
+            <th>Day start borrow</th>
+            <th>Day give back</th>
+            <th>Status</th>
+            <th>Total money</th>
+            <th>See</th>
+            <th>Give back</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bill,state : ${billList}">
+            <td th:text="${bill.id}"></td>
+            <td th:text="${bill.codeBorrow}"></td>
+            <td th:text="${bill.dayStartBorrow}"></td>
+            <td th:text="${bill.dayEndBorrow}"></td>
+            <td th:if="${bill.status == null || bill.status == false}">Unpaid</td>
+            <td th:if="${bill.status == true}">Paid</td>
+            <td th:text="${bill.totalMoney}"></td>
+            <td><a th:href="@{/bill/detail/{id}(id=${bill.id})}" class="btn btn-outline-success">See</a></td>
+            <td th:if="${bill.status == null || bill.status == false}"><a th:href="@{/bill/give-back/{id}(id=${bill.id})}" class="btn btn-outline-primary">Give back</a></td>
+            <td th:if="${bill.status == true}">Done</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

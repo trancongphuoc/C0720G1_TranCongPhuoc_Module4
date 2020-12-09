@@ -10,8 +10,8 @@
 
 <div class="content">
     <div style="margin-left: 43%; margin-top: 20%">
-        <a th:if="${user == null}" href="/login/" class="btn btn-success" th:text="#{sign.in}">Sign in</a>
-        <a th:if="${user == null}" href="/login/register" class="btn btn-primary" th:text="#{sign.up}">Sign up</a>
+        <a th:if="${appUser == null}" href="/login/" class="btn btn-success" th:text="#{sign.in}">Sign in</a>
+        <a th:if="${appUser == null}" href="/login/register" class="btn btn-primary" th:text="#{sign.up}">Sign up</a>
     </div>
 </div>
 

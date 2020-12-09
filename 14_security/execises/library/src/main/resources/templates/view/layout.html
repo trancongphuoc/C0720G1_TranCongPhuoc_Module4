@@ -43,8 +43,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/bill/list">Bill</a>
                 </li>
-                <th:block th:if="${user}">
-                <li th:if="${user.username eq 'admin'}" class="nav-item dropdown">
+                <li class="nav-item" th:if="${#request.userPrincipal}">
+                    <a class="nav-link" href="/logout">Log-out</a>
+                </li>
+                <th:block th:if="${appUser}">
+                <li th:if="${appUser.username eq 'admin'}" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Manage
                     </a>
@@ -59,15 +62,15 @@
 
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item avatar">
-                    <th:block th:if="${user}">
-                        <th:block th:if="${user.username}">
+                    <th:block th:if="${appUser}">
+                        <th:block th:if="${appUser.username}">
                     <a class="nav-link p-0" href="/customer/">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0"
                              alt="avatar image" height="35">
                     </a>
                         </th:block>
                     </th:block>
-                    <th:block th:if="${user == null}">
+                    <th:block th:if="${appUser == null}">
                     <a href="/login/" class="btn btn-success" th:text="#{sign.in}"></a>
                     </th:block>
                 </li>
