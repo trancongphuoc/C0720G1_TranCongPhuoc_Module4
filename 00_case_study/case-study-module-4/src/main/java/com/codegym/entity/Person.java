@@ -17,8 +17,8 @@ public abstract class Person {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "gender", columnDefinition = "BIT")
-    private String gender;
+    @Column(name = "gender")
+    private Boolean gender;
 
     @Column(name = "date_of_birth", columnDefinition = "DATE")
     private String dateOfBirth;
@@ -38,7 +38,7 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(String code, String name, String gender, String dateOfBirth, String idCard, String phone, String email, String address) {
+    public Person(String code, String name, Boolean gender, String dateOfBirth, String idCard, String phone, String email, String address) {
         this.code = code;
         this.name = name;
         this.gender = gender;
@@ -73,11 +73,11 @@ public abstract class Person {
         this.name = name;
     }
 
-    public String getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 

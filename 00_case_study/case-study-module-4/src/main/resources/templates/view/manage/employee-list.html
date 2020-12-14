@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:replace="view/layout::bootstrap"></th:block>
+    <style th:replace="view/layout::style"></style>
+</head>
+<body>
+<div th:replace="view/layout::header"></div>
+
+<div class="content">
+    <div >
+        <table class="table table-striped table-dark text-center" style="font-size: 20px ">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date of birth</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Id card</th>
+                <th>Position</th>
+                <th>Education degree</th>
+                <th>Division</th>
+                <th>Use user</th>
+                <th>Update</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee, state : ${employeeList}">
+                <td th:text="${state.count}"></td>
+                <td th:text="${employee.code}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.dateOfBirth}"></td>
+                <td th:text="${employee.address}"></td>
+                <td th:text="${employee.email}"></td>
+                <td th:text="${employee.phone}"></td>
+                <td th:text="${employee.idCard}"></td>
+                <th:block>
+                <td th:if="${employee.position}" th:text="${employee.position.name}"></td>
+                <td th:unless="${employee.position}"></td>
+                </th:block>
+                <th:block>
+                <td th:if="${employee.educationDegree}" th:text="${employee.educationDegree.name}"></td>
+                <td th:unless="${employee.educationDegree}"></td>
+                </th:block>
+                <th:block>
+                <td th:if="${employee.division}" th:text="${employee.division.name}"></td>
+                <td th:unless="${employee.division}"></td>
+                </th:block>
+                <td th:text="${employee.user.username}"></td>
+                <td><a href="" class="btn btn-outline-light">Update</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="view/layout::footer"></div>
+</body>
+</html>

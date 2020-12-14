@@ -5,7 +5,11 @@ import com.codegym.repository.customer.CustomerRepository;
 import com.codegym.repository.customer.CustomerTypeRepository;
 import com.codegym.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -44,5 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findByCode(String code) {
         return customerRepository.findByCode(code);
+    }
+
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 }

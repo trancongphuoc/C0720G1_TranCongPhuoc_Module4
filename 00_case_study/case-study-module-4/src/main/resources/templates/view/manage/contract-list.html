@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:replace="view/layout::bootstrap"></th:block>
+    <style th:replace="view/layout::style"></style>
+</head>
+<body>
+<div th:replace="view/layout::header"></div>
+
+<div class="content">
+    <div>
+        <table class="table table-striped table-dark text-center">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Rent date</th>
+                <th>Pay date</th>
+                <th>Customer ID</th>
+                <th>Employee ID</th>
+                <th>Service ID</th>
+                <th>Status</th>
+                <th>Deposit</th>
+                <th>Total money</th>
+                <th>See</th>
+                <th>Pay</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contract, state : ${contractList}">
+                <td th:text="${state.count}"></td>
+                <td th:text="${contract.code}"></td>
+                <td th:text="${contract.startDate}"></td>
+                <td th:text="${contract.endDate}"></td>
+                <td th:text="${contract.customer.code}"></td>
+                <td th:if="${contract.employee}" th:text="${contract.employee.code}"></td>
+                <td th:unless="${contract.employee}"></td>
+                <td th:text="${contract.service.code}"></td>
+                <th:block th:switch="${contract.status}">
+                    <td th:case="0">Unpaid</td>
+                    <td th:case="1">Paid</td>
+                </th:block>
+                <td th:text="${contract.deposit}"></td>
+                <td th:text="${contract.totalMoney}"></td>
+                <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}">See</a></td>
+                <td><a class="btn btn-outline-light">Pay</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="view/layout::footer"></div>
+</body>
+</html>

@@ -34,7 +34,7 @@ public class UserValidator implements Validator {
         }
 
 
-        if (!Pattern.compile("^\\w{8,32}$").matcher(user.getPassword()).find()) {
+        if (!Pattern.compile("^\\w{6,32}$").matcher(user.getPassword()).find()) {
             errors.rejectValue("password","password.size.format");
         }
 

@@ -4,6 +4,8 @@ import com.codegym.service.implement.user.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,13 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailServiceImpl userDetailService;
+
+
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -36,7 +45,13 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/home","/sign-in","/sign-up","/logout","/service/list").permitAll();
 
-        http.authorizeRequests().antMatchers("/customer/detail","/service/booking/*","/service/booking").access("hasAnyRole('ROLE_GUEST','ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/customer/detail","/service/booking/*","/service/booking", "employee/detail","customer/save","employee/save").access("hasAnyRole('ROLE_GUEST','ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
+
+//        http.authorizeRequests().antMatchers("/service/save").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
+
+        http.authorizeRequests().antMatchers("/manage/service/list","/manage/customer/list","/manage/contract/list").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN')");
+
+        http.authorizeRequests().antMatchers("/manage/user/*","/manage/employee/list").access("hasAnyRole('ROLE_MANAGE','ROLE_ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 

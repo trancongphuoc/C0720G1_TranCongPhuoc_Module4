@@ -34,4 +34,7 @@ public class ServiceController {
         model.addAttribute("service", serviceDao.findById(id));
         return "view/service/detail";
     }
+
+
+
 }

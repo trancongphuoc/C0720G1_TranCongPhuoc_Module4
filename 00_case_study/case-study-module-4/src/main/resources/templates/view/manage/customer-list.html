@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:replace="view/layout::bootstrap"></th:block>
+    <style th:replace="view/layout::style"></style>
+</head>
+<body>
+<div th:replace="view/layout::header"></div>
+
+<div class="content">
+    <div>
+        <table class="table table-striped table-dark text-center">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date of birth</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Id card</th>
+                <th>Customer type</th>
+                <th>Use user</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer, state : ${customerList}">
+                <td th:text="${state.count}"></td>
+                <td th:text="${customer.code}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.dateOfBirth}"></td>
+                <td th:text="${customer.address}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.phone}"></td>
+                <td th:text="${customer.idCard}"></td>
+                <td th:text="${customer.customerType.name}"></td>
+                <td th:text="${customer.user.username}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="view/layout::footer"></div>
+</body>
+</html>

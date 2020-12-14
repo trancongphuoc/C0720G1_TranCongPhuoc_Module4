@@ -236,16 +236,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Room</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" sec:authorize="hasRole('EMPLOYEE')">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Manage
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Service</a></li>
-                                <li><a class="dropdown-item" href="#">Employee</a></li>
-                                <li><a class="dropdown-item" href="#">Customer</a></li>
-                                <li><a class="dropdown-item" href="#">Contract</a></li>
+                                <li><a class="dropdown-item" href="/manage/service/list">Service</a></li>
+                                <li><a sec:authorize="hasRole('MANAGE')" class="dropdown-item" href="/manage/employee/list">Employee</a></li>
+                                <li><a class="dropdown-item" href="/manage/customer/list">Customer</a></li>
+                                <li><a class="dropdown-item" href="/manage/contract/list">Contract</a></li>
+                                <li><a sec:authorize="hasRole('MANAGE')" class="dropdown-item" href="/manage/user/list">User</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -260,8 +261,16 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                                 <li sec:authorize="isAuthenticated() == false"><a class="dropdown-item" href="/sign-in">Sign in</a></li>
                                 <li sec:authorize="isAuthenticated() == false"><a class="dropdown-item" href="/sign-up">Sign up</a></li>
-                                <li sec:authorize="isAuthenticated()"><a class="dropdown-item" href="/customer/detail">Info personal</a></li>
-                                <li sec:authorize="isAuthenticated()"><a class="dropdown-item" >Setting</a></li>
+                                <li sec:authorize="isAuthenticated()">
+                                    <a sec:authorize="hasRole('EMPLOYEE') == true" class="dropdown-item" href="/employee/detail">Info personal</a>
+                                    <a sec:authorize="hasRole('EMPLOYEE') == false" class="dropdown-item" href="/customer/detail">Info personal</a>
+                                </li>
+                                <li sec:authorize="isAuthenticated()">
+                                    <a href="#" class="dropdown-item" >Register new Service</a>
+                                </li>
+                                <li sec:authorize="isAuthenticated()">
+                                    <a class="dropdown-item" >Setting</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

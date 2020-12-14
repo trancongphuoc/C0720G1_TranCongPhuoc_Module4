@@ -8,6 +8,8 @@ import com.codegym.repository.user.UserRepository;
 import com.codegym.repository.user.UserRoleRepository;
 import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,20 @@ public class UserServiceImpl implements UserService {
 
         userRoleRepository.save(userRole);
 
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

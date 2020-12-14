@@ -26,6 +26,20 @@ public class CustomerValidator implements Validator {
         Customer customer = (Customer) target;
         LocalDate dateOfBirth = LocalDate.parse(customer.getDateOfBirth());
 
+        if (customer.getId() == null) {
+            if (customerService.findByEmail(customer.getEmail()) != null) {
+                errors.rejectValue("email","customer.email.duplicate");
+            }
+
+            if (customerService.findByIdCard(customer.getIdCard()) != null) {
+                errors.rejectValue("idCard","customer.idCard.duplicate");
+            }
+
+            if (customerService.findByPhoneNumber(customer.getPhone()) != null) {
+                errors.rejectValue("phone","customer.phone.duplicate");
+            }
+
+        }
 
         // Check Name
         if (!Pattern.compile("^[A-Z][a-z]+(\\s[A-Z][a-z]+){0,3}$").matcher(customer.getName()).find()) {
@@ -46,9 +60,6 @@ public class CustomerValidator implements Validator {
 
 
         // Check Email
-        if (customerService.findByEmail(customer.getEmail()) != null) {
-            errors.rejectValue("email","customer.email.duplicate");
-        }
 
         if (!Pattern.compile("^\\w{5,}.?\\w+(@\\w{3,8})(.\\w{3,8})+$").matcher(customer.getEmail()).find()) {
             errors.rejectValue("email","customer.email.format");
@@ -60,9 +71,7 @@ public class CustomerValidator implements Validator {
 
 
         // Check ID Card
-        if (customerService.findByIdCard(customer.getIdCard()) != null) {
-            errors.rejectValue("idCard","customer.idCard.duplicate");
-        }
+
 
         if (!Pattern.compile("^\\d{12}$").matcher(customer.getIdCard()).find()) {
             errors.rejectValue("idCard","customer.idCard.format");
@@ -70,9 +79,6 @@ public class CustomerValidator implements Validator {
 
 
         // Check Phone Number
-        if (customerService.findByPhoneNumber(customer.getPhone()) != null) {
-            errors.rejectValue("phone","customer.phone.duplicate");
-        }
 
 
         if (!Pattern.compile("^0\\d{9}$").matcher(customer.getPhone()).find()) {
