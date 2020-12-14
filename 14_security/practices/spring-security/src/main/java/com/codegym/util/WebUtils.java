@@ -13,6 +13,7 @@ public class WebUtils {
         sb.append("UserName:").append(user.getUsername());
 
         Collection<GrantedAuthority> authorities = user.getAuthorities();
+
         if (authorities != null && !authorities.isEmpty()) {
             sb.append(" (");
             boolean first = true;

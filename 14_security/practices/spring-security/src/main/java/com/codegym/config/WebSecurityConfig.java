@@ -12,10 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        System.out.println(bCryptPasswordEncoder);
         return bCryptPasswordEncoder;
     }
 
@@ -41,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Và sét đặt PasswordEncoder.
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
+//        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Cấu hình Remember Me.
         http.authorizeRequests().and() //
                 .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+                .tokenValiditySeconds(365 * 24 * 60 * 60); // 24h
 
     }
 
