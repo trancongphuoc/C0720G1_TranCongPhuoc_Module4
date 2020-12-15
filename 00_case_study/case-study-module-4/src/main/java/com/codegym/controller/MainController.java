@@ -78,26 +78,26 @@ public class MainController {
 
         userService.registerNewUser(user);
         //
-        authenticateUserAndSetSession(userService.findByUsername(user.getUsername()), request);
+//        authenticateUserAndSetSession(userService.findByUsername(user.getUsername()), request);
 
         return "redirect:/home";
     }
 
 
     //
-    private void authenticateUserAndSetSession(User user, HttpServletRequest request) {
-        String username = user.getUsername();
-        String password = user.getPassword();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-
-        // generate session if one doesn't exist
-        request.getSession();
-
-        token.setDetails(new WebAuthenticationDetails(request));
-        Authentication authenticatedUser = authenticationManager.authenticate(token);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-    }
+//    private void authenticateUserAndSetSession(User user, HttpServletRequest request) {
+//        String username = user.getUsername();
+//        String password = user.getPassword();
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+//
+//        // generate session if one doesn't exist
+//        request.getSession();
+//
+//        token.setDetails(new WebAuthenticationDetails(request));
+//        Authentication authenticatedUser = authenticationManager.authenticate(token);
+//
+//        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+//    }
 
 
 

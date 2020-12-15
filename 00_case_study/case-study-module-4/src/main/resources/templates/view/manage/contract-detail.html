@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row title">
             <div class="col-sm-12 col-md-6">
-                <img th:src="${contract.service.image}" alt="" width="100%">
+                <img th:src="@{/image/service/{image}(image =${contract.service.image})}" alt="" width="100%">
             </div>
             <div class="col-sm-12 col-md-6">
                 <p>Service type: <span th:text="${contract.service.serviceType.name}"></span></p>
@@ -113,7 +113,11 @@
                             <td th:case="false">Unpaid</td>
                             <td th:case="true">Paid</td>
                         </th:block>
-
+                    </tr>
+                    <tr>
+                        <th>Poster:</th>
+                        <td th:if="${contract.employee}" th:text="${contract.employee.name}"></td>
+                        <td th:unless="${contract.employee}" th:text="${contract.customer.name}"></td>
                     </tr>
                     <tr>
                         <th>Total money:</th>

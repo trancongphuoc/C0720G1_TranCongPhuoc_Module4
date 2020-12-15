@@ -66,12 +66,12 @@
         }
 
 
-        .form-label-group>input,
-        .form-label-group>label {
+        .form-label-group > input,
+        .form-label-group > label {
             padding: var(--input-padding-y) var(--input-padding-x);
         }
 
-        .form-label-group>label {
+        .form-label-group > label {
             position: absolute;
             top: 0;
             left: 0;
@@ -111,7 +111,7 @@
             padding-bottom: calc(var(--input-padding-y) / 3);
         }
 
-        .form-label-group input:not(:placeholder-shown)~label {
+        .form-label-group input:not(:placeholder-shown) ~ label {
             padding-top: calc(var(--input-padding-y) / 3);
             padding-bottom: calc(var(--input-padding-y) / 3);
             font-size: 12px;
@@ -132,9 +132,10 @@
         -------------------------------------------------- */
 
         @supports (-ms-ime-align: auto) {
-            .form-label-group>label {
+            .form-label-group > label {
                 display: none;
             }
+
             .form-label-group input::-ms-input-placeholder {
                 color: #777;
             }
@@ -145,9 +146,10 @@
 
         @media all and (-ms-high-contrast: none),
         (-ms-high-contrast: active) {
-            .form-label-group>label {
+            .form-label-group > label {
                 display: none;
             }
+
             .form-label-group input:-ms-input-placeholder {
                 color: #777;
             }
@@ -168,21 +170,25 @@
                             <input type="hidden" th:field="*{id}">
                             <input type="hidden" th:field="*{user}">
                             <div class="form-label-group">
-                                <input th:field="*{code}" type="text" class="form-control" placeholder="Name" readonly required autofocus>
+                                <input th:field="*{code}" type="text" class="form-control" placeholder="Name" readonly
+                                       required autofocus>
                                 <label for="code">ID</label>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{name}" type="text" class="form-control" placeholder="Name" required autofocus>
+                                <input th:field="*{name}" type="text" class="form-control" placeholder="Name" required
+                                       autofocus>
                                 <label for="name">Name</label>
                                 <p class="text-center" style="color:red;" th:errors="*{name}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{dateOfBirth}" type="date"  class="form-control" placeholder="Date of birth" required autofocus>
+                                <input th:field="*{dateOfBirth}" type="date" class="form-control"
+                                       placeholder="Date of birth" required autofocus>
                                 <label for="dateOfBirth">Date of birth</label>
                                 <p class="text-center" style="color:red;" th:errors="*{dateOfBirth}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{address}" type="text"  class="form-control" placeholder="Address" required autofocus>
+                                <input th:field="*{address}" type="text" class="form-control" placeholder="Address"
+                                       required autofocus>
                                 <label for="address">Address</label>
                                 <p class="text-center" style="color:red;" th:errors="*{address}"></p>
                             </div>
@@ -194,21 +200,25 @@
                                 </select>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{email}" type="text" class="form-control" placeholder="Email" required autofocus>
+                                <input th:field="*{email}" type="text" class="form-control" placeholder="Email" required
+                                       autofocus>
                                 <label for="email">Email</label>
                                 <p class="text-center" style="color:red;" th:errors="*{email}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{idCard}" type="text" class="form-control" placeholder="ID card" required autofocus>
+                                <input th:field="*{idCard}" type="text" class="form-control" placeholder="ID card"
+                                       required autofocus>
                                 <label for="idCard">ID card</label>
                                 <p class="text-center" style="color:red;" th:errors="*{idCard}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone number" required autofocus>
+                                <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone number"
+                                       required autofocus>
                                 <label for="phone">Phone number</label>
                                 <p class="text-center" style="color:red;" th:errors="*{phone}"></p>
                             </div>
-
+                            <a href="#" th:onclick="'onChangePw('+${customer.user.id}+')'" class="ml-4" data-bs-toggle="modal"
+                               data-bs-target="#exampleModal">Change password</a>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save</button>
                             <hr class="my-4">
                         </form>
@@ -220,5 +230,69 @@
 </div>
 
 <div th:replace="view/layout::footer"></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <input type="hidden" name="idUser" id="idUser">
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-6">Enter new password </label>
+                        <input name="newPassword" id="password" type="password" class="form-control col-5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-6">Repeat password </label>
+                        <input id="repeatPassword" type="password" class="form-control col-5">
+                    </div>
+                    <p id="errorRepeat" style="color:red; display:none;" class="text-center">The password does not
+                        match</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="changePassword">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    function onChangePw(id) {
+        $('#idUser').val(id);
+    }
+
+    $('#repeatPassword').keyup(function () {
+
+        if ($('#repeatPassword').val() !== $('#password').val()) {
+            $('#errorRepeat').show();
+            console.log("ok");
+        } else {
+            $('#errorRepeat').hide();
+            console.log("not ok");
+        }
+    })
+
+    $('#changePassword').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api-user/change-password/" + $('#idUser').val() + "/" + $('#password').val(),
+            dataType: "JSON",
+            success: function (result) {
+                console.log("ok")
+            }
+        })
+    })
+</script>
 </body>
 </html>

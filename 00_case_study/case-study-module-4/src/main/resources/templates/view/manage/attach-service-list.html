@@ -28,8 +28,8 @@
                 <td th:text="${attachService.id}"></td>
                 <td th:text="${attachService.name}"></td>
                 <td th:text="${attachService.cost}"></td>
-                <td th:text="${attachService.amount}"></td>
-                <td><a href="" class="btn btn-outline-light">Add</a></td>
+                <td th:id="${attachService.id}" th:text="${attachService.amount}"></td>
+                <td><a th:onclick="'onUpdate('+${attachService.id}+')'" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</a></td>
             </tr>
             </tbody>
         </table>
@@ -37,5 +37,57 @@
 </div>
 
 <div th:replace="view/layout::footer"></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-5">Enter quantity: </label>
+                        <input id="amount" type="number" class="form-control col-5" name="amount">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+
+    function onUpdate(id) {
+
+
+
+        $('#save').click(function () {
+
+            $.ajax({
+                type : "GET",
+                url : "http://localhost:8080/api-attach-service/update/"+id+ "/"+ $('#amount').val(),
+                dataType : "JSON",
+                success : function (result) {
+
+                    $('#'+result.id).text(result.amount);
+                    // console.log($('#'+result.id));
+                    // console.logresult.amount();
+                    console.log("OK");
+                }
+            })
+        })
+
+    }
+</script>
 </body>
 </html>

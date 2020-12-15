@@ -16,7 +16,7 @@
             padding: 15px;
         }
 
-        .service a{
+        .service a {
             text-decoration: none;
             color: black;
         }
@@ -30,7 +30,7 @@
             color: white;
         }
 
-        .pagination .active a{
+        .pagination .active a {
             border: #3b3b3b;
             background-color: #3b3b3b !important;
         }
@@ -44,7 +44,8 @@
         <th:block th:each="service : ${serviceList}">
             <div class="row service">
                 <div class="col-sm-12 col-lg-4">
-                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img th:src="@{/image/service/{image}(image =${service.image})}" width="100%" alt=""></a>
+                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
+                            th:src="@{/image/service/{image}(image =${service.image})}" width="100%" alt=""></a>
                 </div>
                 <div class="col-sm-12 col-lg-8">
                     <a th:href="@{/service/detail/{id}(id=${service.id})}"><h1 th:text="${service.name}"></h1></a>
@@ -57,35 +58,41 @@
         <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link" href="/service/list?page=0" aria-label="Previous">
+                    <a class="page-link" th:href="@{/service/list(page=0,search=${search},idServiceType=${idServiceType})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link" th:href="@{/service/list(page=${serviceList.number - 1})}" aria-label="Previous">
+                    <a class="page-link" th:href="@{/service/list(page=${serviceList.number - 1},search=${search},idServiceType=${idServiceType})}"
+                       aria-label="Previous">
                         <span aria-hidden="true">&lsaquo;</span>
                     </a>
                 </li>
 
 
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link"  th:text="${serviceList.number}"  th:href="@{/service/list(page=${serviceList.number - 1})}" ></a>
+                    <a class="page-link" th:text="${serviceList.number}"
+                       th:href="@{/service/list(page=${serviceList.number - 1},search=${search},idServiceType=${idServiceType})}"></a>
                 </li>
                 <li class="page-item active">
                     <a class="page-link" href="#" th:text="${serviceList.number +1}"></a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link"  th:text="${serviceList.number +2}"  th:href="@{/service/list(page=${serviceList.number + 1})}" ></a>
+                    <a class="page-link" th:text="${serviceList.number +2}"
+                       th:href="@{/service/list(page=${serviceList.number + 1},search=${search},idServiceType=${idServiceType})}"></a>
                 </li>
 
 
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link"  th:href="@{/service/list(page=${serviceList.number + 1})}"  aria-label="Next">
+                    <a class="page-link" th:href="@{/service/list(page=${serviceList.number + 1}, search=${search},idServiceType=${idServiceType})}"
+                       aria-label="Next">
                         <span aria-hidden="true">&rsaquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link" th:href="@{/service/list(page=${serviceList.totalPages - 1})}" aria-label="Next">
+                    <a class="page-link"
+                       th:href="@{/service/list(page=${serviceList.totalPages - 1}, search=${search},idServiceType=${idServiceType})}"
+                       aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

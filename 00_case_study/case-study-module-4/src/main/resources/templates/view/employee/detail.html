@@ -223,7 +223,8 @@
                                 <input th:field="*{division.id}" type="hidden">
                                 <label>Division</label>
                             </div>
-
+                            <a href="" th:onclick="'onChangePw('+${employee.user.id}+')'" class="ml-4" data-bs-toggle="modal"
+                               data-bs-target="#exampleModal">Change password</a>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save</button>
                             <hr class="my-4">
                         </form>
@@ -233,8 +234,69 @@
         </div>
     </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <input type="hidden" name="idUser" id="idUser">
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-6">Enter new password </label>
+                        <input name="newPassword" id="password" type="password" class="form-control col-5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-6">Repeat password </label>
+                        <input id="repeatPassword" type="password" class="form-control col-5">
+                    </div>
+                    <p id="errorRepeat" style="color:red; display:none;" class="text-center">The password does not
+                        match</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="changePassword">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div th:replace="view/layout::footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    function onChangePw(id) {
+        $('#idUser').val(id);
+    }
+
+    $('#repeatPassword').keyup(function () {
+
+        if ($('#repeatPassword').val() !== $('#password').val()) {
+            $('#errorRepeat').show();
+            console.log("ok");
+        } else {
+            $('#errorRepeat').hide();
+            console.log("not ok");
+        }
+    })
+
+    $('#changePassword').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api-user/change-password/" + $('#idUser').val() + "/" + $('#password').val(),
+            dataType: "JSON",
+            success: function (result) {
+                console.log("ok")
+            }
+        })
+    })
+</script>
 </body>
 </html>

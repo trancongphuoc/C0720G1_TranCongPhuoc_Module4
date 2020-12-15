@@ -28,7 +28,6 @@ import java.util.Random;
 public class ServiceController {
 
 
-
     @Autowired
     private ServiceDao serviceDao;
 
@@ -42,8 +41,21 @@ public class ServiceController {
     private UserService userService;
 
     @GetMapping({"", "/list"})
-    public String goList(@PageableDefault(size = 3) Pageable pageable, Model model) {
-        model.addAttribute("serviceList", serviceDao.findAll(pageable));
+    public String goList(@PageableDefault(size = 3) Pageable pageable,
+                         Model model,
+                         @RequestParam(defaultValue = "") String search,
+                         @RequestParam(defaultValue = "") String idServiceType) {
+
+        if (!search.equals("")) {
+            model.addAttribute("search", search);
+            model.addAttribute("serviceList", serviceDao.findByName(search, pageable));
+        } else if (!idServiceType.equals("")) {
+            model.addAttribute("idServiceType", idServiceType);
+            model.addAttribute("serviceList", serviceDao.findByServiceType(serviceTypeDao.findById(Long.parseLong(idServiceType)), pageable));
+        }else {
+            model.addAttribute("serviceList", serviceDao.findAll(pageable));
+        }
+
         return "view/service/list";
     }
 
@@ -98,31 +110,12 @@ public class ServiceController {
         com.codegym.entity.user.User userMain = userService.findByUsername(userFake.getUsername());
 
         service.setUser(userMain);
+        service.setStatus(false);
 
         serviceDao.save(service);
 
 
         return "redirect:/home";
     }
-
-
-    @GetMapping("/list/{idServiceType}")
-    public String goListByIdServiceType(@PathVariable Long idServiceType,
-                                        @PageableDefault Pageable pageable,
-                                        Model model) {
-        model.addAttribute("serviceList",serviceDao.findByServiceType(serviceTypeDao.findById(idServiceType), pageable));
-
-        return "view/service/list";
-    }
-
-    @GetMapping("/search")
-    public String goListServiceByName(@RequestParam String nameService,
-                                      @PageableDefault Pageable pageable, Model model) {
-
-        model.addAttribute("serviceList",serviceDao.findByName(nameService, pageable));
-
-        return "view/service/list";
-    }
-
-
+    
 }

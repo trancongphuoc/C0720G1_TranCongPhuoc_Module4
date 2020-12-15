@@ -42,7 +42,6 @@
                 <th>Status</th>
                 <th>Deposit</th>
                 <th>Total money</th>
-                <th>User</th>
                 <th>Detail</th>
                 <th>Pay</th>
             </tr>
@@ -63,8 +62,7 @@
                 </th:block>
                 <td th:text="${contract.deposit}"></td>
                 <td th:text="${contract.totalMoney}"></td>
-                <td th:if="${contract.customer}" th:text="${contract.customer.user.username}"></td>
-                <td th:unless="${contract.customer}" th:text="${contract.customer.user.username}"></td>
+
                 <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}"><i class="fa fa-eye"></i></a></td>
                 <td>
                     <a th:if="${!contract.status}" th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}" class="btn btn-outline-light">Pay</a>
@@ -73,43 +71,6 @@
             </tbody>
         </table>
 
-        <nav  aria-label="Page navigation example ">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:if="${contractList.hasPrevious()}">
-                    <a class="page-link" href="/manage/contract/list?page=0" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:if="${contractList.hasPrevious()}">
-                    <a class="page-link" th:href="@{/manage/contract/list(page=${contractList.number - 1})}" aria-label="Previous">
-                        <span aria-hidden="true">&lsaquo;</span>
-                    </a>
-                </li>
-
-
-                <li class="page-item" th:if="${contractList.hasPrevious()}">
-                    <a class="page-link"  th:text="${contractList.number}"  th:href="@{/manage/contract/list(page=${contractList.number - 1})}" ></a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#" th:text="${contractList.number +1}"></a>
-                </li>
-                <li class="page-item" th:if="${contractList.hasNext()}">
-                    <a class="page-link"  th:text="${contractList.number +2}"  th:href="@{/manage/contract/list(page=${contractList.number + 1})}" ></a>
-                </li>
-
-
-                <li class="page-item" th:if="${contractList.hasNext()}">
-                    <a class="page-link"  th:href="@{/manage/contract/list(page=${contractList.number + 1})}"  aria-label="Next">
-                        <span aria-hidden="true">&rsaquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:if="${contractList.hasNext()}">
-                    <a class="page-link" th:href="@{/manage/contract/list(page=${contractList.totalPages - 1})}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
 </div>
 

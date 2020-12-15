@@ -49,7 +49,15 @@ public class ContractController {
     @GetMapping("/booking/{idService}")
     public String goBookingService(@PathVariable Long idService,
                                    Model model,
-                                   HttpSession session) {
+                                   HttpSession session,
+                                   Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
+
+        com.codegym.entity.user.User userMain = userService.findByUsername(user.getUsername());
+
+        if (userMain.getCustomer() == null) {
+            return "redirect:/customer/detail";
+        }
 
         if (serviceDao.findById(idService) != null) {
             model.addAttribute("service", serviceDao.findById(idService));
@@ -82,11 +90,13 @@ public class ContractController {
     public String booking(@Valid @ModelAttribute Contract contract,
                           BindingResult bindingResult,
                           Principal principal,
-                          HttpSession session) {
+                          HttpSession session,
+                          Model model) {
 
         contractValidator.validate(contract, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("attachServiceList",attachServiceDao.findAll());
             return "view/contract/booking-service";
 //            return "redirect:/service/booking/"+contract.getService().getId();
         }
@@ -120,6 +130,22 @@ public class ContractController {
         serviceDao.save(service);
 
         return "redirect:/home";
+    }
+
+
+    @GetMapping("/history")
+    public String history(Principal principal, Model model) {
+        User user = (User) ((Authentication) principal).getPrincipal();
+
+        com.codegym.entity.user.User userMain = userService.findByUsername(user.getUsername());
+
+        if (userMain.getCustomer() != null) {
+            model.addAttribute("contractList", userMain.getCustomer().getContractSet());
+        } else {
+            model.addAttribute("contractList", userMain.getCustomer().getContractSet());
+        }
+
+        return "view/service/history";
     }
 
 }

@@ -246,7 +246,7 @@
 <!--                                </li>-->
 
                                 <li th:each="serviceType : ${serviceTypeList}">
-                                    <a class="dropdown-item" th:href="@{/service/list/{idServiceType}(idServiceType=${serviceType.id})}" th:text="${serviceType.name}"></a>
+                                    <a class="dropdown-item" th:href="@{/service/list(idServiceType=${serviceType.id})}" th:text="${serviceType.name}"></a>
                                 </li>
                             </ul>
                         </li>
@@ -269,9 +269,10 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown user">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
+                            <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user"></i>
+                                <i sec:authorize="isAuthenticated()" class="fas fa-user"></i>
+                                <label sec:authorize="isAuthenticated() == false">Login</label>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                                 <li sec:authorize="isAuthenticated() == false"><a class="dropdown-item" href="/sign-in">Sign in</a></li>
@@ -280,11 +281,14 @@
                                     <a sec:authorize="hasRole('EMPLOYEE') == true" class="dropdown-item" href="/employee/detail">Info personal</a>
                                     <a sec:authorize="hasRole('EMPLOYEE') == false" class="dropdown-item" href="/customer/detail">Info personal</a>
                                 </li>
-                                <li sec:authorize="hasAnyRole('POSTER,ADMIN,EMPLOYEE,MANAGE')">
+                                <li sec:authorize="hasAnyRole('POSTER')">
                                     <a href="/service/register" class="dropdown-item" >Register new Service</a>
                                 </li>
-                                <li sec:authorize="isAuthenticated()">
-                                    <a class="dropdown-item" >Setting</a>
+                                <li sec:authorize="hasAnyRole('POSTER')">
+                                    <a class="dropdown-item" >My Service</a>
+                                </li>
+                                <li sec:authorize="hasRole('GUEST')">
+                                    <a class="dropdown-item" th:href="@{/service/history}" >History</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -293,8 +297,8 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" action="/service/search">
-                        <input name="nameService" class="form-control me-2" type="search" placeholder="Enter name resort"
+                    <form class="d-flex" action="/service/list">
+                        <input name="search" class="form-control me-2" type="search" placeholder="Enter name resort"
                                aria-label="Search">
                         <button class="btn btn-success" type="submit">Search</button>
                     </form>
