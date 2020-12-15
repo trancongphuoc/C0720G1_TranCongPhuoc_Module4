@@ -1,6 +1,8 @@
 package com.codegym.entity.service;
 
 import com.codegym.entity.contract.Contract;
+import com.codegym.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -36,7 +38,7 @@ public class Service {
     private String description;
 
     @Column(name = "status", columnDefinition = "BIT DEFAULT 0")
-    private String status;
+    private Boolean status;
     @Column(name = "pool_area", columnDefinition = "DOUBLE")
     private String poolArea;
 
@@ -55,7 +57,12 @@ public class Service {
     private ServiceType serviceType;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Contract> contractSet;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Service() {
     }
@@ -124,11 +131,11 @@ public class Service {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -178,5 +185,13 @@ public class Service {
 
     public void setContractSet(Set<Contract> contractSet) {
         this.contractSet = contractSet;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

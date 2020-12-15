@@ -132,6 +132,7 @@
             border-top: 1px solid white;
         }
 
+
         @media (min-width: 992px) {
             .carousel-caption {
                 position: absolute;
@@ -227,14 +228,27 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/home">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Villa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">House</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Room</a>
+                        <li class="nav-item"><a class="nav-link" href="/service/list">Booking</a></li>
+                        <li class="nav-item dropdown user">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownService" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Service
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownService" id="navbarDropdownServiceUl">
+<!--                                <li>-->
+<!--                                    <a class="dropdown-item" href="/sign-in">Villa</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a class="dropdown-item" href="/sign-up">House</a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="/service/register" class="dropdown-item" >Room</a>-->
+<!--                                </li>-->
+
+                                <li th:each="serviceType : ${serviceTypeList}">
+                                    <a class="dropdown-item" th:href="@{/service/list/{idServiceType}(idServiceType=${serviceType.id})}" th:text="${serviceType.name}"></a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown" sec:authorize="hasRole('EMPLOYEE')">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -247,6 +261,7 @@
                                 <li><a class="dropdown-item" href="/manage/customer/list">Customer</a></li>
                                 <li><a class="dropdown-item" href="/manage/contract/list">Contract</a></li>
                                 <li><a sec:authorize="hasRole('MANAGE')" class="dropdown-item" href="/manage/user/list">User</a></li>
+                                <li><a class="dropdown-item" href="/manage/attach-service/list">AttachService</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -265,8 +280,8 @@
                                     <a sec:authorize="hasRole('EMPLOYEE') == true" class="dropdown-item" href="/employee/detail">Info personal</a>
                                     <a sec:authorize="hasRole('EMPLOYEE') == false" class="dropdown-item" href="/customer/detail">Info personal</a>
                                 </li>
-                                <li sec:authorize="isAuthenticated()">
-                                    <a href="#" class="dropdown-item" >Register new Service</a>
+                                <li sec:authorize="hasAnyRole('POSTER,ADMIN,EMPLOYEE,MANAGE')">
+                                    <a href="/service/register" class="dropdown-item" >Register new Service</a>
                                 </li>
                                 <li sec:authorize="isAuthenticated()">
                                     <a class="dropdown-item" >Setting</a>
@@ -278,8 +293,8 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Enter name resort"
+                    <form class="d-flex" action="/service/search">
+                        <input name="nameService" class="form-control me-2" type="search" placeholder="Enter name resort"
                                aria-label="Search">
                         <button class="btn btn-success" type="submit">Search</button>
                     </form>

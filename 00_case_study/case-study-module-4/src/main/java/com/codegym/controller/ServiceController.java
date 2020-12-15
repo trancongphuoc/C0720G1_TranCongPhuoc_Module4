@@ -1,30 +1,54 @@
 package com.codegym.controller;
 
+import com.codegym.entity.customer.Customer;
+import com.codegym.entity.service.Service;
+import com.codegym.entity.service.ServiceType;
+import com.codegym.service.service.RentTypeDao;
 import com.codegym.service.service.ServiceDao;
+import com.codegym.service.service.ServiceTypeDao;
+import com.codegym.service.user.UserService;
+import com.codegym.validatior.ServiceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Random;
 
 @Controller
+@SessionAttributes({"serviceTypeList"})
 @RequestMapping({"/service"})
 public class ServiceController {
+
+
 
     @Autowired
     private ServiceDao serviceDao;
 
-    @GetMapping({"","/list"})
-    public String goList(@PageableDefault(size = 3)Pageable pageable, Model model) {
+    @Autowired
+    private ServiceTypeDao serviceTypeDao;
+
+    @Autowired
+    private RentTypeDao rentTypeDao;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping({"", "/list"})
+    public String goList(@PageableDefault(size = 3) Pageable pageable, Model model) {
         model.addAttribute("serviceList", serviceDao.findAll(pageable));
         return "view/service/list";
     }
 
     @GetMapping("/detail/{id}")
-    public String goDetail(@PathVariable Long id,Model model) {
+    public String goDetail(@PathVariable Long id, Model model) {
 
 //        -----------------
         if (serviceDao.findById(id) == null) {
@@ -35,6 +59,70 @@ public class ServiceController {
         return "view/service/detail";
     }
 
+
+    @GetMapping("/register")
+    public String goRegisterService(Model model) {
+
+        Service service = new Service();
+
+        String code;
+        do {
+            code = String.valueOf(new Random().nextInt(9999 - 1000) + 1000);
+        } while (serviceDao.findByCode(code) != null);
+
+
+        service.setCode(code);
+        model.addAttribute("service", service);
+        model.addAttribute("rentTypeList", rentTypeDao.findAll());
+        model.addAttribute("serviceTypeList", serviceTypeDao.findAll());
+        return "view/service/register";
+    }
+
+
+    @PostMapping("/register")
+    public String registerService(@Valid @ModelAttribute Service service,
+                                  BindingResult bindingResult,
+                                  Model model,
+                                  Principal principal) {
+
+        new ServiceValidator().validate(service, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("rentTypeList", rentTypeDao.findAll());
+            model.addAttribute("serviceTypeList", serviceTypeDao.findAll());
+            return "view/service/register";
+        }
+
+        User userFake = (User) ((Authentication) principal).getPrincipal();
+
+        com.codegym.entity.user.User userMain = userService.findByUsername(userFake.getUsername());
+
+        service.setUser(userMain);
+
+        serviceDao.save(service);
+
+
+        return "redirect:/home";
+    }
+
+
+    @GetMapping("/list/{idServiceType}")
+    public String goListByIdServiceType(@PathVariable Long idServiceType,
+                                        @PageableDefault Pageable pageable,
+                                        Model model) {
+        model.addAttribute("serviceList",serviceDao.findByServiceType(serviceTypeDao.findById(idServiceType), pageable));
+
+        return "view/service/list";
+    }
+
+    @GetMapping("/search")
+    public String goListServiceByName(@RequestParam String nameService,
+                                      @PageableDefault Pageable pageable, Model model) {
+
+        model.addAttribute("serviceList",serviceDao.findByName(nameService, pageable));
+
+        return "view/service/list";
+    }
 
 
 }

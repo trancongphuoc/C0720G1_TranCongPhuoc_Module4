@@ -1,6 +1,8 @@
 package com.codegym.controller;
 
+import com.codegym.entity.service.ServiceType;
 import com.codegym.entity.user.User;
+import com.codegym.service.service.ServiceTypeDao;
 import com.codegym.service.user.UserService;
 import com.codegym.validatior.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +17,36 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
+@SessionAttributes({"serviceTypeList"})
 public class MainController {
 
+
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private UserValidator userValidator;
 
     @Autowired
-    protected AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ServiceTypeDao serviceTypeDao;
+
+
+    @ModelAttribute("serviceTypeList")
+    public List<ServiceType> returnListServiceType() {
+        return serviceTypeDao.findAll();
+    }
 
 
     @GetMapping(value = {"/","/home"})
@@ -62,14 +77,14 @@ public class MainController {
         }
 
         userService.registerNewUser(user);
-
+        //
         authenticateUserAndSetSession(userService.findByUsername(user.getUsername()), request);
 
         return "redirect:/home";
     }
 
 
-
+    //
     private void authenticateUserAndSetSession(User user, HttpServletRequest request) {
         String username = user.getUsername();
         String password = user.getPassword();

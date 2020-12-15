@@ -2,6 +2,7 @@ package com.codegym.entity.user;
 
 import com.codegym.entity.customer.Customer;
 import com.codegym.entity.employee.Employee;
+import com.codegym.entity.service.Service;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<UserRole> userRoleSet;
 
     @OneToOne(mappedBy = "user")
@@ -32,6 +34,10 @@ public class User {
     @OneToOne(mappedBy = "user")
     @JsonBackReference
     private Customer customer;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<Service> serviceSet;
 
     public User() {
     }
@@ -82,5 +88,13 @@ public class User {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Set<Service> getServiceSet() {
+        return serviceSet;
+    }
+
+    public void setServiceSet(Set<Service> serviceSet) {
+        this.serviceSet = serviceSet;
     }
 }

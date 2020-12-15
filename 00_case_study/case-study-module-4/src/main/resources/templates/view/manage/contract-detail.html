@@ -9,9 +9,10 @@
     <style th:replace="view/layout::style"></style>
 
     <style>
-        .content a{
-            font-size: 30px!important;
+        .content a {
+            font-size: 30px !important;
         }
+
         .infoDetail th {
             background-color: #545b62;
             width: 200px;
@@ -42,7 +43,8 @@
                 <p>Service type: <span th:text="${contract.service.serviceType.name}"></span></p>
                 <h1 th:text="${contract.service.name}"></h1>
                 <h3 th:text="${contract.service.standardRoom}"></h3>
-                <label class="font-weight-bold" style="font-size: 35px" th:text="${contract.service.cost}"></label><span>$</span>
+                <label class="font-weight-bold" style="font-size: 35px"
+                       th:text="${contract.service.cost}"></label><span>$</span>
                 <s class="ml-3" th:text="${contract.service.cost}"></s>
                 <br>
 
@@ -55,56 +57,80 @@
                         <th colspan="4"><h2>Detail</h2></th>
                     </tr>
                     <tr th:if="${contract.customer}">
-                        <th>Customer: </th>
+                        <th>Customer:</th>
                         <td th:text="${contract.customer.name}"></td>
                         <td th:text="${contract.customer.code}"></td>
                         <td><a href="" class="btn btn-outline-dark">See</a></td>
                     </tr>
                     <tr th:if="${contract.employee}">
-                        <th>Employee: </th>
+                        <th>Employee:</th>
                         <td th:text="${contract.employee.name}"></td>
                         <td th:text="${contract.employee.code}"></td>
                         <td><a href="" class="btn btn-outline-dark">See</a></td>
                     </tr>
                     <tr>
-                        <th>Service: </th>
+                        <th>Service:</th>
                         <td th:text="${contract.service.name}"></td>
                         <td th:text="${contract.service.code}"></td>
                         <td><a href="" class="btn btn-outline-dark">See</a></td>
                     </tr>
                     <tr>
-                        <th>Max people: </th>
+                        <th>Rent date:</th>
+                        <td th:text="${contract.startDate}"></td>
+                    </tr>
+                    <tr>
+                        <th>Pay date:</th>
+                        <td th:text="${contract.endDate}"></td>
+                    </tr>
+                    <tr>
+                        <th>Attach Service:</th>
+                        <td colspan="5">
+                            <label style="margin-left: 30px" for="" th:each="detail : ${contract.contractDetailSet}">
+                                <span th:text="${detail.attachService.name}"></span><span>: </span><span
+                                    th:text="${detail.quantity}"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Max people:</th>
                         <td th:text="${contract.service.maxPeople}"></td>
                     </tr>
                     <tr>
-                        <th>Rent type: </th>
+                        <th>Rent type:</th>
                         <td th:text="${contract.service.rentType.name}"></td>
                     </tr>
                     <tr>
-                        <th>Pool area: </th>
-                        <td  th:text="${contract.service.poolArea}"></td>
+                        <th>Pool area:</th>
+                        <td th:text="${contract.service.poolArea}"></td>
                     </tr>
                     <tr>
-                        <th>Number of floor: </th>
+                        <th>Number of floor:</th>
                         <td th:text="${contract.service.numberOfFloor}"></td>
                     </tr>
                     <tr>
                         <th>Status:</th>
                         <th:block th:switch="${contract.status}">
-                            <td th:case="0">Unpaid</td>
-                            <td th:case="1">Paid</td>
+                            <td th:case="false">Unpaid</td>
+                            <td th:case="true">Paid</td>
                         </th:block>
+
+                    </tr>
+                    <tr>
+                        <th>Total money:</th>
+                        <td th:text="${contract.totalMoney}"></td>
                         <td></td>
-                        <td><a href="" class="btn btn-outline-dark">Pay</a></td>
+                        <td><a th:if="${!contract.status}"
+                              th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}"
+                              class="btn btn-outline-dark">Pay</a></td>
                     </tr>
                 </table>
             </div>
         </div>
 
-<!--        <div class="description">-->
-<!--            <h2>Description</h2>-->
-<!--            <p th:text="${service.description}"></p>-->
-<!--        </div>-->
+        <!--        <div class="description">-->
+        <!--            <h2>Description</h2>-->
+        <!--            <p th:text="${service.description}"></p>-->
+        <!--        </div>-->
     </div>
 </div>
 

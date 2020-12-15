@@ -163,12 +163,12 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Employee</h5>
-                        <form class="form-signin" action="/employee/save" method="post" th:object="${employee}">
+                        <h5 class="card-title text-center">Sign In</h5>
+                        <form class="form-signin" action="/service/register" method="post" th:object="${service}">
                             <input type="hidden" th:field="*{id}">
-                            <input type="hidden" th:field="*{user}">
+                            <input type="hidden" th:field="*{status}" value="false">
                             <div class="form-label-group">
-                                <input th:field="*{code}" type="text" class="form-control" placeholder="Name" readonly required autofocus>
+                                <input th:field="*{code}" type="text" class="form-control" placeholder="Code" readonly required autofocus>
                                 <label for="code">ID</label>
                             </div>
                             <div class="form-label-group">
@@ -177,53 +177,52 @@
                                 <p class="text-center" style="color:red;" th:errors="*{name}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{dateOfBirth}" type="date"  class="form-control" placeholder="Date of birth" required autofocus>
-                                <label for="dateOfBirth">Date of birth</label>
-                                <p class="text-center" style="color:red;" th:errors="*{dateOfBirth}"></p>
+                                <input th:field="*{area}" type="text" class="form-control" placeholder="Area"  required autofocus>
+                                <label for="area">Area</label>
+                                <p class="text-center" style="color:red;" th:errors="*{area}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{address}" type="text"  class="form-control" placeholder="Address" required autofocus>
-                                <label for="address">Address</label>
-                                <p class="text-center" style="color:red;" th:errors="*{address}"></p>
+                                <input th:field="*{cost}" type="text" class="form-control" placeholder="Cost"  required autofocus>
+                                <label for="cost">Cost</label>
+                                <p class="text-center" style="color:red;" th:errors="*{cost}"></p>
                             </div>
                             <div class="form-label-group">
-                                <select th:field="*{gender}" class="form-control">
-                                    <option th:value='null'>Other</option>
-                                    <option value="true">Female</option>
-                                    <option value="false">Male</option>
+                                <input th:field="*{maxPeople}" type="text" class="form-control" placeholder="Max people"  required autofocus>
+                                <label for="maxPeople">Max people</label>
+                                <p class="text-center" style="color:red;" th:errors="*{maxPeople}"></p>
+                            </div>
+                            <div class="form-label-group">
+                                <input th:field="*{standardRoom}" type="text" class="form-control" placeholder="Standard room"  required autofocus>
+                                <label for="standardRoom">Standard room</label>
+                            </div>
+                            <div class="form-label-group">
+                                <select style="height: 50px" th:field="*{rentType}" class="form-control">
+                                    <option th:each="rentType : ${rentTypeList}" th:value="${rentType.id}" th:text="${rentType.name}"></option>
                                 </select>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{email}" type="text" class="form-control" placeholder="Email" required autofocus>
-                                <label for="email">Email</label>
-                                <p class="text-center" style="color:red;" th:errors="*{email}"></p>
+                                <select style="height: 50px" th:field="*{serviceType}" class="form-control">
+                                    <option th:each="serviceType : ${serviceTypeList}" th:value="${serviceType.id}" th:text="${serviceType.name}"></option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <input style="height: 55px; border-radius: 20px" th:field="*{image}" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+<!--                                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>-->
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{idCard}" type="text" class="form-control" placeholder="ID card" required autofocus>
-                                <label for="idCard">ID card</label>
-                                <p class="text-center" style="color:red;" th:errors="*{idCard}"></p>
+                                <input  th:field="*{numberOfFloor}" type="text" class="form-control" placeholder="Number of floor"  autofocus>
+                                <label for="numberOfFloor">Number of floor</label>
+                                <p id="errorNumberOfFloor" class="text-center" style="color:red;" th:errors="*{numberOfFloor}"></p>
                             </div>
                             <div class="form-label-group">
-                                <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone number" required autofocus>
-                                <label for="phone">Phone number</label>
-                                <p class="text-center" style="color:red;" th:errors="*{phone}"></p>
+                                <input  th:field="*{poolArea}" type="text" class="form-control" placeholder="Number of floor"  autofocus>
+                                <label for="poolArea">Pool Area</label>
+                                <p id="errorPoolArea" class="text-center" style="color:red;" th:errors="*{poolArea}"></p>
                             </div>
-                            <div class="form-label-group" th:if="${employee.position}">
-                                <input th:field="*{position.name}" type="text" class="form-control" placeholder="Phone number" readonly required autofocus>
-                                <input th:field="*{position.id}" type="hidden">
-                                <label>Position</label>
+                            <div class="form-label-group">
+                                <textarea rows="5" style="border-radius: 15px" th:field="*{description}" type="text" class="form-control" placeholder="Description"  required autofocus></textarea>
+<!--                                <label for="description">Description</label>-->
                             </div>
-                            <div class="form-label-group" th:if="${employee.educationDegree}">
-                                <input th:field="*{educationDegree.name}" type="text" class="form-control" placeholder="Phone number" readonly required autofocus>
-                                <input th:field="*{educationDegree.id}" type="hidden">
-                                <label>Education Degree</label>
-                            </div>
-                            <div class="form-label-group" th:if="${employee.division}">
-                                <input th:field="*{division.name}" type="text" class="form-control" placeholder="Phone number" readonly required autofocus>
-                                <input th:field="*{division.id}" type="hidden">
-                                <label>Division</label>
-                            </div>
-
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save</button>
                             <hr class="my-4">
                         </form>
@@ -234,7 +233,30 @@
     </div>
 </div>
 
-
 <div th:replace="view/layout::footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($('#serviceType').val() == 1) {
+            $('#poolArea').hide();
+            $('#numberOfFloor').hide();
+            $('#errorNumberOfFloor').hide();
+            $('#errorPoolArea').hide();
+        }
+
+        $('#serviceType').change(function () {
+            if ($(this).val() == 1) {
+                console.log("ok");
+                $('#poolArea').hide();
+                $('#numberOfFloor').hide();
+            } else {
+                console.log("not ok");
+                $('#poolArea').show();
+                $('#numberOfFloor').show();
+            }
+        })
+    })
+</script>
 </body>
 </html>

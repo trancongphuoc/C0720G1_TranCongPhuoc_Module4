@@ -1,6 +1,7 @@
 package com.codegym.entity.service;
 
 import com.codegym.entity.contract.ContractDetail;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class AttachService {
     private String amount;
 
     @OneToMany(mappedBy = "attachService", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<ContractDetail> contractDetailSet;
 
     public AttachService() {

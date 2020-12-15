@@ -9,9 +9,10 @@
     <style th:replace="view/layout::style"></style>
 
     <style>
-        .content a{
-            font-size: 30px!important;
+        .content a {
+            font-size: 30px !important;
         }
+
         .infoDetail th {
             background-color: #545b62;
             width: 200px;
@@ -36,7 +37,7 @@
     <div class="container">
         <div class="row title">
             <div class="col-sm-12 col-md-6">
-                <img th:src="${service.image}" alt="" width="100%">
+                <img th:src="@{/image/service/{image}(image =${service.image})}" alt="" width="100%">
             </div>
             <div class="col-sm-12 col-md-6">
                 <p>Service type: <span th:text="${service.serviceType.name}"></span></p>
@@ -45,7 +46,11 @@
                 <label class="font-weight-bold" style="font-size: 35px" th:text="${service.cost}"></label><span>$</span>
                 <s class="ml-3" th:text="${service.cost}"></s>
                 <br>
-                <a th:href="@{/service/booking/{idService}(idService=${service.id})}" class="btn btn-outline-success">Booking</a>
+                <th:block>
+                    <a th:if="${!service.status}" th:href="@{/service/booking/{idService}(idService=${service.id})}"
+                       class="btn btn-outline-success">Booking</a>
+                    <p  th:if="${service.status}" style="font-size: 35px; color: red">Booked</p>
+                </th:block>
             </div>
         </div>
         <div class="infoDetail">
@@ -55,31 +60,31 @@
                         <th colspan="2"><h2>Info Detail</h2></th>
                     </tr>
                     <tr>
-                        <th>Service type: </th>
+                        <th>Service type:</th>
                         <td th:text="${service.serviceType.name}"></td>
                     </tr>
                     <tr>
-                        <th>Area: </th>
+                        <th>Area:</th>
                         <td th:text="${service.area}"></td>
                     </tr>
                     <tr>
-                        <th>Standard room: </th>
+                        <th>Standard room:</th>
                         <td th:text="${service.standardRoom}"></td>
                     </tr>
                     <tr>
-                        <th>Max people: </th>
+                        <th>Max people:</th>
                         <td th:text="${service.maxPeople}"></td>
                     </tr>
                     <tr>
-                        <th>Rent type: </th>
+                        <th>Rent type:</th>
                         <td th:text="${service.rentType.name}"></td>
                     </tr>
                     <tr>
-                        <th>Pool area: </th>
-                        <td  th:text="${service.poolArea}"></td>
+                        <th>Pool area:</th>
+                        <td th:text="${service.poolArea}"></td>
                     </tr>
                     <tr>
-                        <th>Number of floor: </th>
+                        <th>Number of floor:</th>
                         <td th:text="${service.numberOfFloor}"></td>
                     </tr>
                 </table>

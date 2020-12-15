@@ -4,6 +4,7 @@ package com.codegym.entity.contract;
 import com.codegym.entity.customer.Customer;
 import com.codegym.entity.employee.Employee;
 import com.codegym.entity.service.Service;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class Contract {
     private String totalMoney;
 
     @Column(name = "status", columnDefinition = "BIT DEFAULT 0", nullable = false)
-    private String status;
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -48,6 +49,7 @@ public class Contract {
     Service service;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<ContractDetail> contractDetailSet;
 
     public Contract() {
@@ -101,11 +103,11 @@ public class Contract {
         this.totalMoney = totalMoney;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

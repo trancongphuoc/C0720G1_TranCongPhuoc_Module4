@@ -1,12 +1,19 @@
 package com.codegym.controller;
 
 
+import com.codegym.entity.contract.Contract;
+import com.codegym.entity.employee.Employee;
+import com.codegym.entity.service.Service;
 import com.codegym.entity.user.Role;
 import com.codegym.entity.user.User;
 import com.codegym.entity.user.UserRole;
 import com.codegym.service.contract.ContractService;
 import com.codegym.service.customer.CustomerService;
+import com.codegym.service.employee.DivisionService;
+import com.codegym.service.employee.EducationDegreeService;
 import com.codegym.service.employee.EmployeeService;
+import com.codegym.service.employee.PositionService;
+import com.codegym.service.service.AttachServiceDao;
 import com.codegym.service.service.ServiceDao;
 import com.codegym.service.user.RoleService;
 import com.codegym.service.user.UserRoleService;
@@ -19,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@SessionAttributes({"serviceTypeList"})
 @RequestMapping("/manage")
 public class ManageController {
 
@@ -43,6 +51,18 @@ public class ManageController {
     @Autowired
     UserRoleService userRoleService;
 
+    @Autowired
+    AttachServiceDao attachServiceDao;
+
+    @Autowired
+    PositionService positionService;
+
+    @Autowired
+    EducationDegreeService educationDegreeService;
+
+    @Autowired
+    DivisionService divisionService;
+
     @GetMapping("/service/list")
     public String goListService(Model model, @PageableDefault(size = 10)Pageable pageable) {
         model.addAttribute("serviceList",serviceDao.findAll(pageable));
@@ -61,6 +81,10 @@ public class ManageController {
     @GetMapping("/employee/list")
     public String goListEmployee(Model model, @PageableDefault(size = 10)Pageable pageable) {
         model.addAttribute("employeeList",employeeService.findAll(pageable));
+        model.addAttribute("positionList",positionService.findAll());
+        model.addAttribute("educationDegreeList",educationDegreeService.findAll());
+        model.addAttribute("divisionList",divisionService.findAll());
+
         return "view/manage/employee-list";
     }
 
@@ -77,6 +101,13 @@ public class ManageController {
         model.addAttribute("userList",userService.findAll(pageable));
         model.addAttribute("roleList", roleService.findAll());
         return "view/manage/user-list";
+    }
+
+
+    @GetMapping("/attach-service/list")
+    public String goListAttachService(Model model) {
+        model.addAttribute("attachServiceList",attachServiceDao.findAll());
+        return "view/manage/attach-service-list";
     }
 
 
@@ -101,6 +132,62 @@ public class ManageController {
         userRoleService.save(userRole);
 
         return "redirect:/manage/user/list";
+    }
+
+
+    @GetMapping("/contract/payment/{idContract}")
+    public String payment(@PathVariable Long idContract) {
+        Contract contract = contractService.findById(idContract);
+
+        if (contract != null) {
+            contract.setStatus(true);
+            contractService.save(contract);
+
+            Service service = serviceDao.findById(contract.getService().getId());
+            service.setStatus(false);
+            serviceDao.save(service);
+
+        }
+        return "redirect:/manage/contract/list";
+    }
+
+
+
+    // Update Employeeeeee
+    @PostMapping("/employee/update")
+    public String updateEmployee(@RequestParam Long epId,
+                                 @RequestParam Long posId,
+                                 @RequestParam Long eduId,
+                                 @RequestParam Long divId) {
+        Employee employee = employeeService.findById(epId);
+
+        employee.setPosition(positionService.findById(posId));
+        employee.setEducationDegree(educationDegreeService.findById(eduId));
+        employee.setDivision(divisionService.findById(divId));
+
+        employeeService.save(employee);
+
+        return "redirect:/manage/employee/list";
+    }
+
+
+
+
+//     Delete Service
+    @GetMapping("/service/delete/{id}")
+    public String deleteServiceById(@PathVariable Long id) {
+        serviceDao.deleteById(id);
+
+        return "redirect:/manage/service/list";
+    }
+
+
+//     Delete Service
+    @GetMapping("/employee/delete/{id}")
+    public String deleteEmployeeId(@PathVariable Long id) {
+        employeeService.deleteById(id);
+
+        return "redirect:/manage/employee/list";
     }
 
 }

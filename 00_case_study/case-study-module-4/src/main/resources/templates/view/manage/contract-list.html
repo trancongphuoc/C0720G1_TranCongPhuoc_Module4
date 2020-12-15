@@ -7,6 +7,22 @@
 
     <th:block th:replace="view/layout::bootstrap"></th:block>
     <style th:replace="view/layout::style"></style>
+
+    <style>
+        .pagination a {
+            color: black;
+        }
+
+        .pagination a:hover {
+            background-color: #3b3b3b;
+            color: white;
+        }
+
+        .pagination .active a{
+            border: #3b3b3b;
+            background-color: #3b3b3b !important;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="view/layout::header"></div>
@@ -26,7 +42,7 @@
                 <th>Status</th>
                 <th>Deposit</th>
                 <th>Total money</th>
-                <th>See</th>
+                <th>Detail</th>
                 <th>Pay</th>
             </tr>
             </thead>
@@ -41,16 +57,57 @@
                 <td th:unless="${contract.employee}"></td>
                 <td th:text="${contract.service.code}"></td>
                 <th:block th:switch="${contract.status}">
-                    <td th:case="0">Unpaid</td>
-                    <td th:case="1">Paid</td>
+                    <td th:case="false">Unpaid</td>
+                    <td th:case="true">Paid</td>
                 </th:block>
                 <td th:text="${contract.deposit}"></td>
                 <td th:text="${contract.totalMoney}"></td>
-                <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}">See</a></td>
-                <td><a class="btn btn-outline-light">Pay</a></td>
+
+                <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}"><i class="fa fa-eye"></i></a></td>
+                <td>
+                    <a th:if="${!contract.status}" th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}" class="btn btn-outline-light">Pay</a>
+                </td>
             </tr>
             </tbody>
         </table>
+
+        <nav  aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${contractList.hasPrevious()}">
+                    <a class="page-link" href="/manage/contract/list?page=0" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${contractList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/manage/contract/list(page=${contractList.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+
+
+                <li class="page-item" th:if="${contractList.hasPrevious()}">
+                    <a class="page-link"  th:text="${contractList.number}"  th:href="@{/manage/contract/list(page=${contractList.number - 1})}" ></a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${contractList.number +1}"></a>
+                </li>
+                <li class="page-item" th:if="${contractList.hasNext()}">
+                    <a class="page-link"  th:text="${contractList.number +2}"  th:href="@{/manage/contract/list(page=${contractList.number + 1})}" ></a>
+                </li>
+
+
+                <li class="page-item" th:if="${contractList.hasNext()}">
+                    <a class="page-link"  th:href="@{/manage/contract/list(page=${contractList.number + 1})}"  aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${contractList.hasNext()}">
+                    <a class="page-link" th:href="@{/manage/contract/list(page=${contractList.totalPages - 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 

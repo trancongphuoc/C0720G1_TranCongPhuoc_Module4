@@ -45,13 +45,13 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/home","/sign-in","/sign-up","/logout","/service/list").permitAll();
 
-        http.authorizeRequests().antMatchers("/customer/detail","/service/booking/*","/service/booking", "employee/detail","customer/save","employee/save").access("hasAnyRole('ROLE_GUEST','ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
+        http.authorizeRequests().antMatchers("/customer/detail","/service/booking/*","/service/booking", "/employee/detail","/customer/save","/employee/save").access("hasAnyRole('ROLE_GUEST','ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
 
-//        http.authorizeRequests().antMatchers("/service/save").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
+        http.authorizeRequests().antMatchers("/service/save", "/service/register").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN','ROLE_POSTER')");
 
-        http.authorizeRequests().antMatchers("/manage/service/list","/manage/customer/list","/manage/contract/list").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/manage/service/list","/manage/customer/list","/manage/contract/list","/manage/attach-service/list").access("hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGE','ROLE_ADMIN')");
 
-        http.authorizeRequests().antMatchers("/manage/user/*","/manage/employee/list").access("hasAnyRole('ROLE_MANAGE','ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/manage/user/*","/manage/employee/list","/manage/employee/delete/*","/manage/service/delete/*").access("hasAnyRole('ROLE_MANAGE','ROLE_ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 

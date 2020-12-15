@@ -16,4 +16,8 @@ public interface EmployeeService {
     Employee findByPhoneNumber(String phone);
 
     void save(Employee employee);
+
+    Employee findById(Long epId);
+
+    void deleteById(Long id);
 }

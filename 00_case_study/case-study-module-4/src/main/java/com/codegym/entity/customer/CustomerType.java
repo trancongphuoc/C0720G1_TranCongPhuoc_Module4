@@ -2,6 +2,7 @@ package com.codegym.entity.customer;
 
 
 import com.codegym.entity.TypeCommon;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 public class CustomerType extends TypeCommon {
 
     @OneToMany(mappedBy = "customerType", cascade = CascadeType.ALL)
+    @JsonBackReference
     Set<Customer> customerSet;
 
     public CustomerType() {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:replace="view/layout::bootstrap"></th:block>
+    <style th:replace="view/layout::style"></style>
+</head>
+<body>
+<div th:replace="view/layout::header"></div>
+
+<div class="content">
+    <div>
+        <table class="table table-striped table-dark text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Amount</th>
+                <th>Add quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="attachService, state : ${attachServiceList}">
+                <td th:text="${attachService.id}"></td>
+                <td th:text="${attachService.name}"></td>
+                <td th:text="${attachService.cost}"></td>
+                <td th:text="${attachService.amount}"></td>
+                <td><a href="" class="btn btn-outline-light">Add</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="view/layout::footer"></div>
+</body>
+</html>

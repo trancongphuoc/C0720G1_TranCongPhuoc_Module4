@@ -7,6 +7,22 @@
 
     <th:block th:replace="view/layout::bootstrap"></th:block>
     <style th:replace="view/layout::style"></style>
+
+    <style>
+        .pagination a {
+            color: black;
+        }
+
+        .pagination a:hover {
+            background-color: #3b3b3b;
+            color: white;
+        }
+
+        .pagination .active a{
+            border: #3b3b3b;
+            background-color: #3b3b3b !important;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="view/layout::header"></div>
@@ -47,6 +63,44 @@
             </tr>
             </tbody>
         </table>
+
+        <nav  aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${userList.hasPrevious()}">
+                    <a class="page-link" href="/manage/user/list?page=0" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${userList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/manage/user/list(page=${userList.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+
+
+                <li class="page-item" th:if="${userList.hasPrevious()}">
+                    <a class="page-link"  th:text="${userList.number}"  th:href="@{/manage/user/list(page=${userList.number - 1})}" ></a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${userList.number +1}"></a>
+                </li>
+                <li class="page-item" th:if="${userList.hasNext()}">
+                    <a class="page-link"  th:text="${userList.number +2}"  th:href="@{/manage/user/list(page=${userList.number + 1})}" ></a>
+                </li>
+
+
+                <li class="page-item" th:if="${userList.hasNext()}">
+                    <a class="page-link"  th:href="@{/manage/user/list(page=${userList.number + 1})}"  aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${userList.hasNext()}">
+                    <a class="page-link" th:href="@{/manage/user/list(page=${userList.totalPages - 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 
@@ -88,19 +142,10 @@
         </div>
     </div>
 </div>
-<form action="/abc">
-<!--    <input type="text">-->
-</form>
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
-    $(document).ready(function () {
-        // $('.btn').click(function () {
-        //     // $('#username').val($(this).val())
-        //     $('#username').attr('value',$(this).val())
-        // })
 
-
-    })
     function update(id) {
         console.log("ok");
         $('#userId').val(id);

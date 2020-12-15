@@ -44,7 +44,7 @@
         <th:block th:each="service : ${serviceList}">
             <div class="row service">
                 <div class="col-sm-12 col-lg-4">
-                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img th:src="${service.image}" width="100%" alt=""></a>
+                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img th:src="@{/image/service/{image}(image =${service.image})}" width="100%" alt=""></a>
                 </div>
                 <div class="col-sm-12 col-lg-8">
                     <a th:href="@{/service/detail/{id}(id=${service.id})}"><h1 th:text="${service.name}"></h1></a>

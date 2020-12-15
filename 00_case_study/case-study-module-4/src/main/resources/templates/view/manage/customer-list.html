@@ -7,6 +7,22 @@
 
     <th:block th:replace="view/layout::bootstrap"></th:block>
     <style th:replace="view/layout::style"></style>
+
+    <style>
+        .pagination a {
+            color: black;
+        }
+
+        .pagination a:hover {
+            background-color: #3b3b3b;
+            color: white;
+        }
+
+        .pagination .active a{
+            border: #3b3b3b;
+            background-color: #3b3b3b !important;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="view/layout::header"></div>
@@ -43,6 +59,44 @@
             </tr>
             </tbody>
         </table>
+
+        <nav  aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${customerList.hasPrevious()}">
+                    <a class="page-link" href="/manage/customer/list?page=0" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${customerList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/manage/customer/list(page=${customerList.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+
+
+                <li class="page-item" th:if="${customerList.hasPrevious()}">
+                    <a class="page-link"  th:text="${customerList.number}"  th:href="@{/manage/customer/list(page=${customerList.number - 1})}" ></a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${customerList.number +1}"></a>
+                </li>
+                <li class="page-item" th:if="${customerList.hasNext()}">
+                    <a class="page-link"  th:text="${customerList.number +2}"  th:href="@{/manage/customer/list(page=${customerList.number + 1})}" ></a>
+                </li>
+
+
+                <li class="page-item" th:if="${customerList.hasNext()}">
+                    <a class="page-link"  th:href="@{/manage/customer/list(page=${customerList.number + 1})}"  aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${customerList.hasNext()}">
+                    <a class="page-link" th:href="@{/manage/customer/list(page=${customerList.totalPages - 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 

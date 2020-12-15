@@ -1,6 +1,7 @@
 package com.codegym.entity.employee;
 
 import com.codegym.entity.TypeCommon;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.Set;
 public class Division extends TypeCommon {
 
     @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Employee> employeeSet;
 
     public Division() {

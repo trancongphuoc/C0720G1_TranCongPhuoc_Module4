@@ -27,6 +27,7 @@ import java.util.Random;
 import java.util.Set;
 
 @Controller
+@SessionAttributes({"serviceTypeList"})
 @RequestMapping("/service")
 public class ContractController {
 
@@ -110,9 +111,15 @@ public class ContractController {
         }
         contract.setContractDetailSet(contractDetailSet);
 
-
+        contract.setStatus(false);
         contractService.save(contract);
+
+        Service service = serviceDao.findById(contract.getService().getId());
+        service.setStatus(true);
+
+        serviceDao.save(service);
 
         return "redirect:/home";
     }
+
 }

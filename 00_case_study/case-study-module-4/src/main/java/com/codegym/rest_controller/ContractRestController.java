@@ -27,7 +27,7 @@ public class ContractRestController {
 
 
     @GetMapping("/booking/{idService}/{startDate}/{endDate}")
-    public ResponseEntity<Double> returnTotalMoney(@PathVariable Long idService,
+    public ResponseEntity<Double> calTotalMoneyByDay(@PathVariable Long idService,
                                                    @PathVariable String startDate,
                                                    @PathVariable String endDate,
                                                    @ModelAttribute Contract contract,
@@ -45,7 +45,7 @@ public class ContractRestController {
     }
 
     @GetMapping("/booking/{idAttachService}/{amount}")
-    public ResponseEntity<Double> calTotalMoney(@PathVariable Long idAttachService,
+    public ResponseEntity<Double> calTotalMoneyByAttachService(@PathVariable Long idAttachService,
                                                 @PathVariable String amount,
                                                 HttpSession session){
         HashMap<Long, AttachService> attachServiceHashMap = (HashMap<Long, AttachService>) session.getAttribute("attachServiceSession");
