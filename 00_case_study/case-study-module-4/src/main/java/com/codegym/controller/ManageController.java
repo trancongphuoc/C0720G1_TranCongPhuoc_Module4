@@ -2,6 +2,8 @@ package com.codegym.controller;
 
 
 import com.codegym.entity.contract.Contract;
+import com.codegym.entity.customer.Customer;
+import com.codegym.entity.customer.CustomerType;
 import com.codegym.entity.employee.Employee;
 import com.codegym.entity.service.Service;
 import com.codegym.entity.user.Role;
@@ -9,6 +11,7 @@ import com.codegym.entity.user.User;
 import com.codegym.entity.user.UserRole;
 import com.codegym.service.contract.ContractService;
 import com.codegym.service.customer.CustomerService;
+import com.codegym.service.customer.CustomerTypeService;
 import com.codegym.service.employee.DivisionService;
 import com.codegym.service.employee.EducationDegreeService;
 import com.codegym.service.employee.EmployeeService;
@@ -63,8 +66,11 @@ public class ManageController {
     @Autowired
     DivisionService divisionService;
 
+    @Autowired
+    CustomerTypeService customerTypeService;
+
     @GetMapping("/service/list")
-    public String goListService(Model model, @PageableDefault(size = 10)Pageable pageable) {
+    public String goListService(Model model, @PageableDefault(size = 5)Pageable pageable) {
         model.addAttribute("serviceList",serviceDao.findAll(pageable));
         return "view/manage/service-list";
     }
@@ -72,14 +78,28 @@ public class ManageController {
 
 
     @GetMapping("/customer/list")
-    public String goListCustomer(Model model, @PageableDefault(size = 10)Pageable pageable) {
-        model.addAttribute("customerList",customerService.findAll(pageable));
+    public String goListCustomer(Model model,
+                                 @PageableDefault(size = 5)Pageable pageable,
+                                 @RequestParam(defaultValue = "") String nameCustomer,
+                                 @RequestParam(defaultValue = "") String idCustomerType) {
+
+        if (!nameCustomer.equals("")) {
+            model.addAttribute("nameCustomer", nameCustomer);
+            model.addAttribute("customerList", customerService.findAllByNameCustomer(nameCustomer, pageable));
+        } else if (!idCustomerType.equals("")) {
+            model.addAttribute("idCustomerType", idCustomerType);
+            model.addAttribute("customerList", customerService.findAllByCustomerType(customerTypeService.findById(Long.parseLong(idCustomerType)),pageable));
+        }else {
+            model.addAttribute("customerList",customerService.findAll(pageable));
+        }
+
+        model.addAttribute("customerTypeList", customerTypeService.findAll());
         return "view/manage/customer-list";
     }
 
 
     @GetMapping("/employee/list")
-    public String goListEmployee(Model model, @PageableDefault(size = 10)Pageable pageable) {
+    public String goListEmployee(Model model, @PageableDefault(size = 5)Pageable pageable) {
         model.addAttribute("employeeList",employeeService.findAll(pageable));
         model.addAttribute("positionList",positionService.findAll());
         model.addAttribute("educationDegreeList",educationDegreeService.findAll());
@@ -90,14 +110,15 @@ public class ManageController {
 
 
     @GetMapping("/contract/list")
-    public String goListContract(Model model, @PageableDefault(size = 10)Pageable pageable) {
+    public String goListContract(Model model, @PageableDefault(size = 5)Pageable pageable) {
+        model.addAttribute("employeeList", employeeService.findAll());
         model.addAttribute("contractList",contractService.findAll(pageable));
         return "view/manage/contract-list";
     }
 
 
     @GetMapping("/user/list")
-    public String goListUser(Model model, @PageableDefault(size = 10)Pageable pageable) {
+    public String goListUser(Model model, @PageableDefault(size = 5)Pageable pageable) {
         model.addAttribute("userList",userService.findAll(pageable));
         model.addAttribute("roleList", roleService.findAll());
         return "view/manage/user-list";
@@ -190,4 +211,35 @@ public class ManageController {
         return "redirect:/manage/employee/list";
     }
 
+
+
+    @PostMapping("/customer/update")
+    public String updateCustomerType(@RequestParam Long idCustomer,
+                                     @RequestParam Long idCustomerType) {
+
+        Customer customer = customerService.findById(idCustomer);
+
+        CustomerType customerType = customerTypeService.findById(idCustomerType);
+
+        customer.setCustomerType(customerType);
+
+        customerService.save(customer);
+
+
+        return "redirect:/manage/customer/list";
+    }
+
+
+    @PostMapping("/contract/update")
+    public String updateContract(@RequestParam Long idContract,
+                                 @RequestParam Long idEmployee) {
+
+        Contract contract = contractService.findById(idContract);
+
+        contract.setEmployee(employeeService.findById(idEmployee));
+
+        contractService.save(contract);
+
+        return "redirect:/manage/contract/list";
+    }
 }

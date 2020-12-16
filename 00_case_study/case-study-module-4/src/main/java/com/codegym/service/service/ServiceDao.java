@@ -2,6 +2,7 @@ package com.codegym.service.service;
 
 import com.codegym.entity.service.Service;
 import com.codegym.entity.service.ServiceType;
+import com.codegym.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,4 +22,6 @@ public interface ServiceDao {
     void deleteById(Long id);
 
     Page<Service> findByName(String nameService, Pageable pageable);
+
+    Page<Service> findAllByUser(User userMain, Pageable pageable);
 }

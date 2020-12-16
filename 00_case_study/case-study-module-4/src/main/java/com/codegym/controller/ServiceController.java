@@ -110,12 +110,45 @@ public class ServiceController {
         com.codegym.entity.user.User userMain = userService.findByUsername(userFake.getUsername());
 
         service.setUser(userMain);
-        service.setStatus(false);
+
+        if (service.getId() == null) {
+            service.setStatus(false);
+        }
+
 
         serviceDao.save(service);
 
 
         return "redirect:/home";
     }
-    
+
+
+
+    @GetMapping("/my-service")
+    public String myService(Principal principal,
+                            Model model,
+                            @PageableDefault(size = 5) Pageable pageable) {
+
+        User user = (User) ((Authentication) principal).getPrincipal();
+
+        com.codegym.entity.user.User userMain = userService.findByUsername(user.getUsername());
+
+        model.addAttribute("serviceList", serviceDao.findAllByUser(userMain, pageable));
+
+        return "view/service/my-service";
+    }
+
+
+    @GetMapping("/update/{id}")
+    public String updateService(@PathVariable Long id, Model model) {
+
+        Service service = serviceDao.findById(id);
+
+        model.addAttribute("service",service);
+        model.addAttribute("rentTypeList", rentTypeDao.findAll());
+        model.addAttribute("serviceTypeList", serviceTypeDao.findAll());
+
+        return "view/service/update";
+    }
+
 }

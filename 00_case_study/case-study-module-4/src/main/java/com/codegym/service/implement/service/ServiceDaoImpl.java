@@ -1,6 +1,7 @@
 package com.codegym.service.implement.service;
 
 import com.codegym.entity.service.ServiceType;
+import com.codegym.entity.user.User;
 import com.codegym.repository.service.ServiceRepository;
 import com.codegym.service.service.ServiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ServiceDaoImpl implements ServiceDao {
     @Override
     public Page<com.codegym.entity.service.Service> findByName(String nameService, Pageable pageable) {
         return serviceRepository.findAllByNameContaining(nameService, pageable);
+    }
+
+    @Override
+    public Page<com.codegym.entity.service.Service> findAllByUser(User userMain, Pageable pageable) {
+        return serviceRepository.findAllByUser(userMain, pageable);
     }
 }

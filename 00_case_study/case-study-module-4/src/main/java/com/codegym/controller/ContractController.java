@@ -142,7 +142,7 @@ public class ContractController {
         if (userMain.getCustomer() != null) {
             model.addAttribute("contractList", userMain.getCustomer().getContractSet());
         } else {
-            model.addAttribute("contractList", userMain.getCustomer().getContractSet());
+            model.addAttribute("contractList");
         }
 
         return "view/service/history";

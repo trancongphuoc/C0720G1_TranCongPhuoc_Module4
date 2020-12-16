@@ -149,7 +149,16 @@
 </head>
 <body>
 <div th:replace="view/layout::header"></div>
+<!--<div th:if="${#request.getParameter('error') == 'true'}"-->
+<!--     style="color:red;margin:10px 0px;">-->
+<!--    Login Failed!!!<br />-->
+<!--    Reason :-->
+<!--    <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"-->
+<!--          th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">-->
+<!--                Static summary-->
+<!--         </span>-->
 
+<!--</div>-->
 <div class="content">
     <div class="container">
         <div class="row">
@@ -158,6 +167,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Sign In</h5>
                         <form class="form-signin" th:action="@{/j_spring_security_check}" method="post">
+                            <p th:if="${#request.getParameter('error') == 'true'}" class="text-center" style="color: red">Account or password is incorrect</p>
                             <div class="form-label-group">
                                 <input name="username" type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                                 <label for="inputEmail">Email address</label>

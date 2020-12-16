@@ -31,7 +31,7 @@
 
         .navbar {
             /*background-color: rgba(4, 4, 4, 0.96) !important;*/
-            background-color: rgb(4, 4, 4) !important;
+            background-color: rgba(22, 22, 22, 0.97) !important;
         }
 
         .jumbotron {
@@ -123,7 +123,7 @@
 
         .footer {
             /*background-color: rgba(4, 4, 4, 0.96);*/
-            background-color: rgb(4, 4, 4) !important;
+            background-color: rgba(22, 22, 22, 0.97) !important;
             padding: 15px;
             color: white;
         }
@@ -209,7 +209,7 @@
 <div class="header" th:fragment="header">
     <div class="container-fluid">
         <div class="logo">
-            <img id="logo" src="/image/logo2.png" alt="">
+            <img id="logo" src="/image/furama-logo.png" alt="">
         </div>
 
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -285,7 +285,7 @@
                                     <a href="/service/register" class="dropdown-item" >Register new Service</a>
                                 </li>
                                 <li sec:authorize="hasAnyRole('POSTER')">
-                                    <a class="dropdown-item" >My Service</a>
+                                    <a class="dropdown-item" href="/service/my-service">My Service</a>
                                 </li>
                                 <li sec:authorize="hasRole('GUEST')">
                                     <a class="dropdown-item" th:href="@{/service/history}" >History</a>

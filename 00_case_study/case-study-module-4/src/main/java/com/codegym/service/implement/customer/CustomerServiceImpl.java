@@ -1,6 +1,7 @@
 package com.codegym.service.implement.customer;
 
 import com.codegym.entity.customer.Customer;
+import com.codegym.entity.customer.CustomerType;
 import com.codegym.repository.customer.CustomerRepository;
 import com.codegym.repository.customer.CustomerTypeRepository;
 import com.codegym.service.customer.CustomerService;
@@ -53,5 +54,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Page<Customer> findAll(Pageable pageable) {
         return customerRepository.findAll(pageable);
+    }
+
+    @Override
+    public Customer findById(Long idCustomer) {
+        return customerRepository.findById(idCustomer).orElse(null);
+    }
+
+    @Override
+    public Page<Customer> findAllByNameCustomer(String nameCustomer, Pageable pageable) {
+        return customerRepository.findAllByNameContaining(nameCustomer, pageable);
+    }
+
+    @Override
+    public Page<Customer> findAllByCustomerType(CustomerType customerType, Pageable pageable) {
+        return customerRepository.findAllByCustomerType(customerType, pageable);
     }
 }

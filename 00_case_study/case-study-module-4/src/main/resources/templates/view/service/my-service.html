@@ -44,7 +44,8 @@
                 <th>Status</th>
                 <th>Name poster</th>
                 <th>Detail</th>
-                <th sec:authorize="hasAnyRole('MANAGE,ADMIN')">Delete</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -65,7 +66,8 @@
                 </th:block>
                 <td th:text="${service.user.username}"></td>
                 <td><a th:onclick="'onDetail('+${service.id}+')'" href="" class="btn btn-outline-success bg-light" data-bs-toggle="modal" data-bs-target="#exampleModalDetail"><i class="fa fa-eye"></i></a></td>
-                <td sec:authorize="hasAnyRole('MANAGE,ADMIN')"><a th:onclick="'onDel('+${service.id}+')'" class="btn btn-outline-danger bg-light" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-recycle"></i></a></td>
+                <td><a th:href="@{/service/update/{id}(id=${service.id})}" class="btn btn-outline-primary bg-light"><i class="fa fa-edit"></i></a></td>
+                <td><a th:onclick="'onDel('+${service.id}+')'" class="btn btn-outline-danger bg-light" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-recycle"></i></a></td>
             </tr>
             </tbody>
         </table>
@@ -73,35 +75,35 @@
         <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link" href="/manage/service/list?page=0" aria-label="Previous">
+                    <a class="page-link" href="/service/my-service?page=0" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link" th:href="@{/manage/service/list(page=${serviceList.number - 1})}" aria-label="Previous">
+                    <a class="page-link" th:href="@{/service/my-service(page=${serviceList.number - 1})}" aria-label="Previous">
                         <span aria-hidden="true">&lsaquo;</span>
                     </a>
                 </li>
 
 
                 <li class="page-item" th:if="${serviceList.hasPrevious()}">
-                    <a class="page-link"  th:text="${serviceList.number}"  th:href="@{/manage/service/list(page=${serviceList.number - 1})}" ></a>
+                    <a class="page-link"  th:text="${serviceList.number}"  th:href="@{/service/my-service(page=${serviceList.number - 1})}" ></a>
                 </li>
                 <li class="page-item active">
                     <a class="page-link" href="#" th:text="${serviceList.number +1}"></a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link"  th:text="${serviceList.number +2}"  th:href="@{/manage/service/list(page=${serviceList.number + 1})}" ></a>
+                    <a class="page-link"  th:text="${serviceList.number +2}"  th:href="@{/service/my-service(page=${serviceList.number + 1})}" ></a>
                 </li>
 
 
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link"  th:href="@{/manage/service/list(page=${serviceList.number + 1})}"  aria-label="Next">
+                    <a class="page-link"  th:href="@{/service/my-service(page=${serviceList.number + 1})}"  aria-label="Next">
                         <span aria-hidden="true">&rsaquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:if="${serviceList.hasNext()}">
-                    <a class="page-link" th:href="@{/manage/service/list(page=${serviceList.totalPages - 1})}" aria-label="Next">
+                    <a class="page-link" th:href="@{/service/my-service(page=${serviceList.totalPages - 1})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -223,7 +225,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+                <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div>
     </div>

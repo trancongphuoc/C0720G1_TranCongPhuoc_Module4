@@ -43,6 +43,7 @@
                 <th>Deposit</th>
                 <th>Total money</th>
                 <th>User</th>
+                <th sec:authorize="hasRole('MANAGE')">Update</th>
                 <th>Detail</th>
                 <th>Pay</th>
             </tr>
@@ -65,7 +66,8 @@
                 <td th:text="${contract.totalMoney}"></td>
                 <td th:if="${contract.customer}" th:text="${contract.customer.user.username}"></td>
                 <td th:unless="${contract.customer}" th:text="${contract.customer.user.username}"></td>
-                <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}"><i class="fa fa-eye"></i></a></td>
+                <td sec:authorize="hasRole('MANAGE')"><a th:if="${!contract.status}" th:onclick="'onUpdate('+${contract.id}+')'" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-edit"></i></a></td>
+                <td><a class="btn btn-outline-success" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}"><i class="fa fa-eye"></i></a></td>
                 <td>
                     <a th:if="${!contract.status}" th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}" class="btn btn-outline-light">Pay</a>
                 </td>
@@ -114,5 +116,42 @@
 </div>
 
 <div th:replace="view/layout::footer"></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/manage/contract/update" method="post">
+                <input type="hidden" name="idContract" id="idContract">
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="" class="col-form-label col-5">Employee</label>
+                        <select type="text" class="form-control col-5" name="idEmployee">
+                            <option th:each="employee : ${employeeList}" th:value="${employee.id}" th:text="${employee.name}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    function onUpdate(id) {
+        $('#idContract').val(id);
+    }
+</script>
 </body>
 </html>
