@@ -46,8 +46,8 @@ public class ContractRestController {
 
     @GetMapping("/booking/{idAttachService}/{amount}")
     public ResponseEntity<Double> calTotalMoneyByAttachService(@PathVariable Long idAttachService,
-                                                @PathVariable String amount,
-                                                HttpSession session){
+                                                                @PathVariable String amount,
+                                                                HttpSession session){
         HashMap<Long, AttachService> attachServiceHashMap = (HashMap<Long, AttachService>) session.getAttribute("attachServiceSession");
 
         double result1 = (double) session.getAttribute("resultSession1");

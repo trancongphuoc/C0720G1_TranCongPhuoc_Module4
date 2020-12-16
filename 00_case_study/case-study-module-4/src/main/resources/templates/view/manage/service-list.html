@@ -41,6 +41,7 @@
                 <th>Max people</th>
                 <th>Service type</th>
                 <th>Rent type</th>
+                <th>Pool area</th>
                 <th>Status</th>
                 <th>Name poster</th>
                 <th>Detail</th>
@@ -58,6 +59,7 @@
                 <td th:text="${service.maxPeople}"></td>
                 <td th:text="${service.serviceType.name}"></td>
                 <td th:text="${service.rentType.name}"></td>
+                <td th:text="${service.poolArea}"></td>
                 <th:block th:switch="${service.status}">
                     <td th:case="false">Still</td>
                     <td th:case="true">Hired</td>

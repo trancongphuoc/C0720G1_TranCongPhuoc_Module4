@@ -271,7 +271,8 @@
                         <li class="nav-item dropdown user">
                             <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i sec:authorize="isAuthenticated()" class="fas fa-user"></i>
+<!--                                <i sec:authorize="isAuthenticated()" class="fas fa-user"></i>-->
+                                <img width="50px" sec:authorize="isAuthenticated()" src="/image/icon-yasou2.png" alt="">
                                 <label sec:authorize="isAuthenticated() == false">Login</label>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">

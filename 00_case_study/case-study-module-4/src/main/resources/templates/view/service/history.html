@@ -65,7 +65,9 @@
 
                 <td><a class="btn btn-outline-light" th:href="@{/manage/contract/detail/{idContract}(idContract=${contract.id})}"><i class="fa fa-eye"></i></a></td>
                 <td>
+                    <th:block sec:authorize="hasRole('EMPLOYEE')">
                     <a th:if="${!contract.status}" th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}" class="btn btn-outline-light">Pay</a>
+                    </th:block>
                 </td>
             </tr>
             </tbody>

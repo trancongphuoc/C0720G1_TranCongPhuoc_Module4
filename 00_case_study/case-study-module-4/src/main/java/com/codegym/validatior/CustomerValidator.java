@@ -26,6 +26,7 @@ public class CustomerValidator implements Validator {
         Customer customer = (Customer) target;
         LocalDate dateOfBirth = LocalDate.parse(customer.getDateOfBirth());
 
+
         if (customer.getId() == null) {
             if (customerService.findByEmail(customer.getEmail()) != null) {
                 errors.rejectValue("email","customer.email.duplicate");
@@ -39,7 +40,29 @@ public class CustomerValidator implements Validator {
                 errors.rejectValue("phone","customer.phone.duplicate");
             }
 
+        } else {
+            Customer customerCheck = customerService.findById(customer.getId());
+
+            if (!customer.getEmail().equals(customerCheck.getEmail())) {
+                if (customerService.findByEmail(customer.getEmail()) != null) {
+                    errors.rejectValue("email","customer.email.duplicate");
+                }
+            }
+
+            if (!customer.getIdCard().equals(customerCheck.getIdCard())) {
+                if (customerService.findByIdCard(customer.getIdCard()) != null) {
+                    errors.rejectValue("idCard","customer.idCard.duplicate");
+                }
+            }
+
+            if (!customer.getPhone().equals(customerCheck.getPhone())) {
+                if (customerService.findByPhoneNumber(customer.getPhone()) != null) {
+                    errors.rejectValue("phone","customer.phone.duplicate");
+                }
+            }
         }
+
+
 
         // Check Name
         if (!Pattern.compile("^[A-Z][a-z]+(\\s[A-Z][a-z]+){0,3}$").matcher(customer.getName()).find()) {

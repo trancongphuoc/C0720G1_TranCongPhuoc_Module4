@@ -123,7 +123,7 @@
                         <th>Total money:</th>
                         <td th:text="${contract.totalMoney}"></td>
                         <td></td>
-                        <td><a th:if="${!contract.status}"
+                        <td sec:authorize="hasRole('EMPLOYEE')"><a th:if="${!contract.status}"
                               th:href="@{/manage/contract/payment/{idContract}(idContract=${contract.id})}"
                               class="btn btn-outline-dark">Pay</a></td>
                     </tr>

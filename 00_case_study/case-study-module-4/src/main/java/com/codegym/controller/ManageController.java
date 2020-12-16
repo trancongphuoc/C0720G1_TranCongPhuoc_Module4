@@ -24,9 +24,12 @@ import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @SessionAttributes({"serviceTypeList"})
@@ -157,11 +160,19 @@ public class ManageController {
 
 
     @GetMapping("/contract/payment/{idContract}")
-    public String payment(@PathVariable Long idContract) {
+    public String payment(@PathVariable Long idContract, Principal principal) {
         Contract contract = contractService.findById(idContract);
 
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+        User userMain = userService.findByUsername(user.getUsername());
+
+        if (userMain.getEmployee() == null) {
+            return "redirect:/employee/detail";
+        }
         if (contract != null) {
             contract.setStatus(true);
+            contract.setEmployee(userMain.getEmployee());
             contractService.save(contract);
 
             Service service = serviceDao.findById(contract.getService().getId());

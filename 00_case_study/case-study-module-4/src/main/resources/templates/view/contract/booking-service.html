@@ -80,7 +80,7 @@
                             <label class="col-lg-2 col-form-label" th:text="${attachService.name}"></label>
                             <button th:onclick="'minus('+${attachService.id}+')'" type="button" class="btn btn-outline-light add" style="width: 30px; height: 40px">-
                             </button>
-                            <input  th:id="service+${attachService.id}" type="text" class="col-1 form-control checkNumber" value="0">
+                            <input  th:id="service+${attachService.id}" type="text" class="col-1 form-control checkNumber" value="0" readonly>
                             <button th:onclick="'add('+${attachService.id}+')'" type="button" class="btn btn-outline-light minus" style="width: 30px; height: 40px">+
                             </button>
                         </div>
